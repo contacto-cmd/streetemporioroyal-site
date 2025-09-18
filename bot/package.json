@@ -1,0 +1,36 @@
+{
+  "name": "streetemporioroyal-bot",
+  "version": "1.0.0",
+  "description": "Bot oficial Street Emperio Royal con Discord.js y Express en modo High-Pro",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "lint": "eslint . --ext .js",
+    "format": "prettier --write ."
+  },
+  "keywords": [
+    "discord",
+    "bot",
+    "express",
+    "streetemporioroyal",
+    "high-pro"
+  ],
+  "author": "Royal King",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^14.15.3",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1"
+  },
+  "devDependencies": {
+    "eslint": "^9.14.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-node": "^11.1.0",
+    "nodemon": "^3.1.7",
+    "prettier": "^3.3.3"
+  },
+  "engines": {
+    "node": ">=18.x"
+  }
+}
