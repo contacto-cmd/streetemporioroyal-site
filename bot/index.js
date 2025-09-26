@@ -41,3 +41,13 @@ export async function startBot() {
   await registerCommands();
   await client.login(process.env.DISCORD_TOKEN);
 }
+import express from 'express';
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+app.get('/healthz', (_, res) => res.status(200).send('ok'));
+app.get('/ready',  (_, res) => res.status(200).send('ready'));
+app.get('/',       (_, res) => res.type('text/plain').send('🤖 Royal bot running'));
+
+app.listen(PORT, () => console.log(`HTTP healthcheck on :${PORT}`));
