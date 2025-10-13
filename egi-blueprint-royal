@@ -1,0 +1,180 @@
+# 1) Crea carpeta y entra
+mkdir egi-blueprint-royal && cd egi-blueprint-royal
+
+# 2) Archivos base
+cat > package.json << 'EOF'
+{
+  "name": "egi-blueprint-royal",
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {
+    "express": "^4.19.2",
+    "node-fetch": "^3.3.2"
+  },
+  "scripts": { "start": "node server.js" }
+}
+EOF
+
+cat > blueprint.json << 'EOF'
+{
+  "project": "EGI Blueprint Royal",
+  "domains": { "primary_api": "api.streetemporioroyal.com" },
+  "routes": [
+    { "match": "/v1/chat/completions", "to": "llm", "timeout_ms": 28000 },
+    { "match": "/synapse/live", "to": "livefeed" },
+    { "match": "/anti_blindaje/alert", "to": "defense" },
+    { "match": "/status", "to": "status" }
+  ],
+  "security": {
+    "api_keys": ["ROYAL_SUPER_KEY_1","ROYAL_SUPER_KEY_2"],
+    "rate_limit_per_min": 60,
+    "allow_origins": ["https://streetemporioroyal.com"]
+  },
+  "aegis": { "tick_sec": 45, "alerts": { "discord_webhook": "" } }
+}
+EOF
+
+cat > server.js << 'EOF'
+import express from "express";
+import fetch from "node-fetch";
+import fs from "fs";
+
+const app = express();
+app.use(express.json());
+
+// ===== Carga de blueprint (opcional)
+let BP = {};
+try { BP = JSON.parse(fs.readFileSync("./blueprint.json","utf8")); } catch { BP = {}; }
+
+// ===== ENV (con alias para que no choque con lo que ya tienes)
+const CORE = {
+  MODE: process.env.CORE_MODE || process.env.ROYAL_MODE || "production",
+  SIGN: process.env.CORE_SIGNATURE || process.env.ROYAL_CORE_SIGNATURE || "RoyalKing_SovereignAI",
+  DOMAIN_ID: process.env.CORE_DOMAIN_ID || process.env.DOMAIN_ID || "USER_ROSARITO_01",
+  PUBLIC_URL: process.env.CORE_PUBLIC_URL || process.env.PUBLIC_URL || (BP.domains?.primary_api || "api.streetemporioroyal.com")
+};
+const SYN = {
+  VECTOR_MODE: process.env.SYNAPSE_VECTOR_MODE || process.env.EGI_VECTOR_MODE || "HYBRID_SMART",
+  CACHE_POLICY: process.env.SYNAPSE_CACHE_POLICY || process.env.CACHE_POLICY || "PROACTIVE_CACHE",
+  SYNC_INTERVAL: Number(process.env.SYNAPSE_SYNC_INTERVAL || process.env.SYNC_INTERVAL || 300)
+};
+const ANTI = {
+  MODE: process.env.ANTI_MODE || "DEFENSIVE_AUTO",
+  TOKEN: process.env.ANTI_TOKEN || process.env.ANTI_BLINDAJE_TOKEN || "KonfethYzjaj",
+  WEBHOOK: process.env.ANTI_NOTIFY_DISCORD_WEBHOOK || process.env.NOTIFY_DISCORD_WEBHOOK || ""
+};
+const LLM = {
+  PROVIDER: (process.env.LLM_PROVIDER || "openai").toLowerCase(),
+  OAI_KEY: process.env.OPENAI_API_KEY || "",
+  OAI_URL: process.env.OPENAI_MODEL_URL || "https://api.openai.com/v1/chat/completions",
+  OAI_MODEL: process.env.OPENAI_MODEL_ID || "gpt-4o-mini",
+  GROQ_KEY: process.env.GROQ_API_KEY || "",
+  GROQ_URL: process.env.GROQ_MODEL_URL || "",
+  GROQ_MODEL: process.env.GROQ_MODEL_ID || ""
+};
+
+// ===== STATUS
+app.get("/status",(req,res)=>{
+  res.json({
+    service: "EGI_BLUEPRINT_ROYAL",
+    dominion_id: CORE.DOMAIN_ID,
+    mode: CORE.MODE,
+    signature: CORE.SIGN,
+    public_url: CORE.PUBLIC_URL,
+    synapse: { vector_mode: SYN.VECTOR_MODE, cache_policy: SYN.CACHE_POLICY, sync_interval_sec: SYN.SYNC_INTERVAL },
+    anti_blindaje: { mode: ANTI.MODE, notify_hook: Boolean(ANTI.WEBHOOK) }
+  });
+});
+
+// ===== SYNAPSE LIVE (mock operativo)
+app.get("/synapse/live",(req,res)=>{
+  res.json({
+    dominion_id: CORE.DOMAIN_ID,
+    status: "ACTIVE_MOBILE",
+    synapse_vector_routing: {
+      primary_vector: { type: "WiFi", latency_ms: 45, stability_score: 0.88, recommended_load_percentage: 60 },
+      secondary_vector: { type: "Cellular", provider: "Telcel", latency_ms: 22, recommended_load_percentage: 40 },
+      adaptive_balance_mode: SYN.VECTOR_MODE
+    },
+    sphere_action: { action_type: SYN.CACHE_POLICY, status: "READY" },
+    timestamp: new Date().toISOString()
+  });
+});
+
+// ===== ANTI-BLINDAJE (defensivo, legal)
+app.post("/anti_blindaje/alert", async (req,res)=>{
+  const token = req.headers["x-royal-token"];
+  if(token !== ANTI.TOKEN) return res.status(403).json({error:"invalid_token"});
+
+  const a = req.body || {};
+  const risk = a?.threat_detected?.risk_level || a?.risk_level || "LOW";
+  const score = a?.threat_detected?.threat_score || 0.0;
+
+  const actions = [];
+  if(risk === "CRITICAL" || score > 0.8){
+    actions.push("VECTOR_CUT_WIFI","PIVOT_CELLULAR_FULL","ROTATE_TOKENS_SAFE","PRIORITY_PREFETCH_CACHE");
+  } else if(risk === "HIGH"){
+    actions.push("REDUCE_BACKGROUND_SYNC","PREFETCH_ESSENTIALS");
+  } else actions.push("MONITOR");
+
+  if(ANTI.WEBHOOK){
+    try{
+      await fetch(ANTI.WEBHOOK,{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body: JSON.stringify({ content:`🛡 Anti-Blindaje | ${risk} | actions: ${actions.join(", ")}` })
+      });
+    }catch{}
+  }
+  res.json({ ok:true, decided_actions: actions, ts: new Date().toISOString()});
+});
+
+// ===== Passthrough LLM (OpenAI o Groq)
+app.post("/v1/chat/completions", async (req,res)=>{
+  const body = {...(req.body||{})};
+  let url, key, model;
+
+  if(LLM.PROVIDER === "openai"){
+    url = LLM.OAI_URL; key = LLM.OAI_KEY; model = LLM.OAI_MODEL;
+  } else if(LLM.PROVIDER === "groq"){
+    url = LLM.GROQ_URL; key = LLM.GROQ_KEY; model = LLM.GROQ_MODEL;
+  } else return res.status(400).json({error:"unknown_provider"});
+
+  if(!body.model) body.model = model;
+
+  try{
+    const r = await fetch(url,{
+      method:"POST",
+      headers: {"Content-Type":"application/json","Authorization":`Bearer ${key}`},
+      body: JSON.stringify(body)
+    });
+    const data = await r.json();
+    res.status(r.status).json(data);
+  }catch(e){
+    res.status(502).json({error:"upstream_failed", detail:String(e)});
+  }
+});
+
+// ===== Health
+app.get("/health",(req,res)=>res.send("✅ EGI Blueprint Royal alive"));
+
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, ()=>console.log(`EGI Blueprint Royal on :${PORT}`));
+EOF
+
+# 3) Git init y primer commit
+git init
+git add .
+git commit -m "feat: EGI Blueprint Royal (synapse + anti-blindaje + llm)"
+
+# 4) Sube a GitHub (elige UNA opción)
+
+# Opción A: usando GitHub CLI (si la tienes)
+# gh repo create egi-blueprint-royal --public --source=. --remote=origin --push
+
+# Opción B: manual
+# - Crea repo vacío en GitHub llamado egi-blueprint-royal
+# - Luego:
+git branch -M main
+git remote add origin https://github.com/TU_USUARIO/egi-blueprint-royal.git
+git push -u origin main
