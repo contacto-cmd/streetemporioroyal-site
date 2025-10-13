@@ -1,13 +1,44 @@
 {
-  "name": "royal-egi-blueprint",
-  "version": "1.0.0",
-  "type": "module",
-  "scripts": {
-    "start": "node server.js",
-    "dev": "node server.js"
+  "version": "2.3",
+  "dominion_id": "USER_ROSARITO_01",
+  "core_status": "ONLINE",
+  "core_domain": "streetemporioroyal.com",
+  "royal_signature": "KonfethYzjaj",
+  "scepter_mode": "AUTOMATIC",
+  "synapse": {
+    "mode": "HYBRID_SMART",
+    "primary_vector": {
+      "type": "Cellular",
+      "provider": "Telcel",
+      "band": "5G_NSA",
+      "latency_ms": 22,
+      "stability_score": 0.95
+    },
+    "secondary_vector": {
+      "type": "WiFi",
+      "ssid": "Royal_Hub",
+      "latency_ms": 40,
+      "stability_score": 0.88
+    }
   },
-  "dependencies": {
-    "express": "^4.19.2",
-    "cors": "^2.8.5"
+  "anti_blindaje": {
+    "policy": "baseline",
+    "firewall": "ACTIVE",
+    "zero_trust": true,
+    "dns_protection": true,
+    "intrusion_prevention": true,
+    "audit_log": "https://royal.bestia/logs/AEGIS"
+  },
+  "aegis_protocol": {
+    "threat_level": "NORMAL",
+    "auto_rotation": true,
+    "defense_vector": ["WIFI", "CELLULAR_5G"],
+    "fallback_order": ["5G_Telcel","Starlink_Relay"],
+    "cache_preload": ["Email_Inbox", "RoyalDocs", "Spotify_DrivingMix"]
+  },
+  "mission_status": {
+    "mode": "ACTIVE",
+    "task": "Royal Blueprint Core Online",
+    "next_check": "2025-10-13T04:00:00Z"
   }
 }
