@@ -1,20 +1,31 @@
-# Street Emporio Royal 👑
+# 🧠 Royal EGI Blueprint
 
-[![CI](https://img.shields.io/badge/CI-passing-brightgreen)](#)
-![Node](https://img.shields.io/badge/node-%3E%3D18-brightgreen)
-![Vercel](https://img.shields.io/badge/host-Vercel-black)
-![Railway](https://img.shields.io/badge/backend-Railway-purple)
+Sistema base del núcleo de IA conectado a Railway y GitHub.
 
-Monorepo enterprise: `/bot` (backend en Railway) + `/web` (frontend + API en Vercel).
+## Endpoints
+| Ruta | Descripción |
+|------|--------------|
+| `/health` | Verifica el estado del servicio |
+| `/api/status` | Muestra configuración CORE + SYNAPSE |
+| `/api/blueprint` | Devuelve el JSON de AEGIS_BLUEPRINT |
+| `/api/anti` | Expone metadatos del Anti-Blindaje |
 
-## Deploy
-- **Railway** → Root: `/bot` · Start: `npm start`
-- **Vercel**  → Root: `/web` · ENV: `BACKEND_URL`
+## Deploy en Railway
+1. Subir repo a GitHub con nombre **royal-egi-blueprint**
+2. En Railway: `New → Deploy from GitHub`
+3. Build Command: `npm install`
+4. Start Command: `npm start`
+5. Variables de entorno:
+   - CORE_DOMAIN
+   - CORE_MODE
+   - CORE_SIGNATURE
+   - AEGIS_BLUEPRINT
+   - ANTI_MODE
+   - ANTI_BLINDAJE_CORE
+   - SYNAPSE_REGION
+   - SYNAPSE_VECTOR
+   - ALLOW_ORIGINS
 
-## Health
-- Backend: `/health` y `/ready`
-- Front: `/api/status` consulta el backend
-
-## Dev
-```bash
-cd bot && npm i && npm run dev
+## Ejemplo de prueba
+GET https://api.streetemporioroyal.com/health
+→ `{ "ok": true, "service": "royal-egi-blueprint" }`
