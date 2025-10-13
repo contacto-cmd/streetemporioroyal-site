@@ -1,29 +1,126 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Street Emporio Royal</title>
 
-  <!-- 🌐 Título navegador -->
-  <title>Street Emporio Royal 👑 | Arquitectura Visionaria</title>
+  <!-- SEO básico -->
+  <meta name="description" content="Frontend de Street Emporio Royal. API viva en Railway con proxy desde Vercel." />
+  <link rel="canonical" href="https://streetemporioroyal.com/" />
 
-  <!-- 🪄 Open Graph -->
-  <meta property="og:title" content="Street Emporio Royal 👑">
-  <meta property="og:description" content="Arquitectura futurista, lujo callejero y visión interdimensional.">
-  <meta property="og:url" content="https://streetemporioroyal.vercel.app">
-  <meta property="og:image" content="https://streetemporioroyal.vercel.app/assets/preview.jpg">
-  <meta property="og:site_name" content="Street Emporio Royal">
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Street Emporio Royal" />
+  <meta property="og:description" content="Sistema Royal EGI: Web en Vercel, API en Railway." />
+  <meta property="og:url" content="https://streetemporioroyal.com/" />
 
-  <!-- 🐦 Twitter Cards -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Street Emporio Royal 👑">
-  <meta name="twitter:description" content="Arquitectura futurista, lujo callejero y visión interdimensional.">
-  <meta name="twitter:image" content="https://streetemporioroyal.vercel.app/assets/preview.jpg">
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Street Emporio Royal" />
+  <meta name="twitter:description" content="Web en Vercel con proxy a api.streetemporioroyal.com." />
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ctext y='50' font-size='48'%3E%F0%9F%9A%80%3C/text%3E%3C/svg%3E">
+  <style>
+    :root { --bg:#0b0b0f; --card:#12121a; --muted:#a5a7b5; --brand:#7cf; --ok:#19d27c; --bad:#ff5d5d; }
+    * { box-sizing:border-box; }
+    html,body { height:100%; }
+    body {
+      margin:0; font-family: system-ui,-apple-system,Segoe UI,Roboto,Inter,Ubuntu,Helvetica,Arial,sans-serif;
+      background: radial-gradient(1000px 500px at 10% -10%, #11223355, transparent), var(--bg);
+      color:#e9ecf1; display:flex; align-items:center; justify-content:center; padding:28px;
+    }
+    .shell { width:100%; max-width:900px; }
+    .card {
+      background:linear-gradient(180deg, #171724 0%, #0f0f16 100%);
+      border:1px solid #232338; border-radius:16px; padding:24px; box-shadow:0 10px 30px #0006;
+    }
+    h1 { margin:0 0 6px; font-weight:800; letter-spacing:.2px; }
+    p.lead { margin:0 0 18px; color:var(--muted) }
+    .grid { display:grid; gap:16px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); margin-top:18px; }
+    .panel { padding:16px; border:1px solid #24243a; border-radius:12px; background:#0e0e15; }
+    .k { color: #9aa1b5; font-size:13px; }
+    code { background:#10101a; padding:.2rem .35rem; border-radius:6px; border:1px solid #1e2033; }
+    a { color: var(--brand); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .pill { display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border-radius:999px; background:#0d1a22; border:1px solid #1e3240; }
+    .ok { color:var(--ok) } .bad { color:var(--bad) }
+    .muted { color: var(--muted); }
+    .footer { margin-top:16px; color:#8a8fa3; font-size:13px; text-align:center; }
+    .btn {
+      display:inline-block; padding:10px 14px; border-radius:10px; border:1px solid #26304a;
+      background:#0f1a2a; color:#dbe9ff; text-decoration:none; font-weight:600;
+    }
+    .btn:hover { filter:brightness(1.15); }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+  </style>
 </head>
-
 <body>
-  <h1>Street Emporio Royal 👑</h1>
-  <p>API pública: <a href="/api/hello">/api/hello</a></p>
-  <p>Status backend (Railway): <a href="https://railway.app">Railway</a></p>
+  <main class="shell">
+    <div class="card">
+      <div class="pill"><span>🚀</span><strong>Street Emporio Royal</strong><span class="muted">· Web + API</span></div>
+      <h1>Frontend vivo en Vercel</h1>
+      <p class="lead">Proxy a <code class="mono">api.streetemporioroyal.com</code> con <strong>rewrites</strong>. Sin cambios raros, sin romper el API.</p>
+
+      <div class="grid">
+        <section class="panel">
+          <h3>Estado del API (proxy)</h3>
+          <p class="muted">Llamando a <code>/api/health</code> vía Vercel → Railway</p>
+          <pre id="health" class="mono" style="white-space:pre-wrap;word-break:break-word;">Cargando…</pre>
+          <a class="btn" href="/api/health" target="_blank">Abrir /api/health</a>
+        </section>
+
+        <section class="panel">
+          <h3>Endpoints útiles</h3>
+          <ul>
+            <li><a href="/api/health" target="_blank">/api/health</a> <span class="k">— ping</span></li>
+            <li><a href="/api/aegis/alert" target="_blank">/api/aegis/alert</a> <span class="k">— demo AEGIS</span></li>
+            <li><a href="/api/dominion/status" target="_blank">/api/dominion/status</a> <span class="k">— estado móvil</span></li>
+            <li><a href="/api/synapse/blueprint" target="_blank">/api/synapse/blueprint</a> <span class="k">— blueprint conceptual</span></li>
+          </ul>
+          <p class="muted">Directo API: <a href="https://api.streetemporioroyal.com/health" target="_blank">https://api.streetemporioroyal.com/health</a></p>
+        </section>
+
+        <section class="panel">
+          <h3>Meta</h3>
+          <p class="muted">Este sitio es 100% estático. Si mañana cambias el backend, los enlaces siguen sirviendo gracias al rewrite.</p>
+          <ul class="muted">
+            <li>⚙️ Deploy: Vercel (root <code>web/</code>)</li>
+            <li>🔁 Proxy: <code>/api/* → https://api.streetemporioroyal.com/*</code></li>
+            <li>🧠 API: Railway (tu Royal EGI)</li>
+          </ul>
+        </section>
+      </div>
+
+      <div id="statusLine" class="footer">Comprobando API…</div>
+    </div>
+  </main>
+
+  <script>
+    async function fetchJSON(url, opts={}) {
+      const r = await fetch(url, opts);
+      const text = await r.text();
+      try { return { ok: r.ok, json: JSON.parse(text) }; }
+      catch { return { ok: r.ok, json: text }; }
+    }
+
+    (async () => {
+      const el = document.getElementById('health');
+      const statusLine = document.getElementById('statusLine');
+      try {
+        const { ok, json } = await fetchJSON('/api/health', { cache: 'no-store' });
+        if (ok) {
+          el.textContent = JSON.stringify(json, null, 2);
+          statusLine.innerHTML = 'Estado: <span class="ok">OK</span> — proxy funcionando.';
+        } else {
+          el.textContent = typeof json === 'string' ? json : JSON.stringify(json, null, 2);
+          statusLine.innerHTML = 'Estado: <span class="bad">ERROR</span> — revisa Railway.';
+        }
+      } catch (e) {
+        el.textContent = String(e);
+        statusLine.innerHTML = 'Estado: <span class="bad">OFF</span> — no se pudo contactar al API.';
+      }
+    })();
+  </script>
 </body>
 </html>
