@@ -3,101 +3,125 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Street Emporio Royal</title>
+  <title>Street Emporio Royal — EGI Blueprint</title>
 
   <!-- SEO básico -->
-  <meta name="description" content="Frontend de Street Emporio Royal. API viva en Railway con proxy desde Vercel." />
+  <meta name="description" content="Frontend Pro de Street Emporio Royal. Web en Vercel con proxy al API en Railway." />
   <link rel="canonical" href="https://streetemporioroyal.com/" />
 
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Street Emporio Royal" />
-  <meta property="og:description" content="Sistema Royal EGI: Web en Vercel, API en Railway." />
+  <meta property="og:title" content="Street Emporio Royal — EGI Blueprint" />
+  <meta property="og:description" content="Web en Vercel con proxy directo a api.streetemporioroyal.com" />
   <meta property="og:url" content="https://streetemporioroyal.com/" />
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Street Emporio Royal" />
-  <meta name="twitter:description" content="Web en Vercel con proxy a api.streetemporioroyal.com." />
+  <meta name="twitter:title" content="Street Emporio Royal — EGI Blueprint" />
+  <meta name="twitter:description" content="Frontend estático + Proxy /api/* → API Railway" />
 
+  <!-- Favicon (inline) -->
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ctext y='50' font-size='48'%3E%F0%9F%9A%80%3C/text%3E%3C/svg%3E">
+
   <style>
-    :root { --bg:#0b0b0f; --card:#12121a; --muted:#a5a7b5; --brand:#7cf; --ok:#19d27c; --bad:#ff5d5d; }
-    * { box-sizing:border-box; }
-    html,body { height:100%; }
-    body {
-      margin:0; font-family: system-ui,-apple-system,Segoe UI,Roboto,Inter,Ubuntu,Helvetica,Arial,sans-serif;
-      background: radial-gradient(1000px 500px at 10% -10%, #11223355, transparent), var(--bg);
-      color:#e9ecf1; display:flex; align-items:center; justify-content:center; padding:28px;
+    :root {
+      --bg:#0b0b0f; --card:#12121a; --muted:#a5a7b5; --brand:#7cf;
+      --ok:#19d27c; --bad:#ff5d5d; --warn:#f5a524; --ink:#e9ecf1;
+      --line:#232338; --panel:#0e0e15;
     }
-    .shell { width:100%; max-width:900px; }
-    .card {
-      background:linear-gradient(180deg, #171724 0%, #0f0f16 100%);
-      border:1px solid #232338; border-radius:16px; padding:24px; box-shadow:0 10px 30px #0006;
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family:system-ui,-apple-system,Segoe UI,Inter,Roboto,Ubuntu,Helvetica,Arial,sans-serif;
+      background: radial-gradient(900px 520px at 15% -10%, #11223355, transparent), var(--bg);
+      color:var(--ink); display:flex; align-items:center; justify-content:center; padding:26px;
     }
-    h1 { margin:0 0 6px; font-weight:800; letter-spacing:.2px; }
-    p.lead { margin:0 0 18px; color:var(--muted) }
-    .grid { display:grid; gap:16px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); margin-top:18px; }
-    .panel { padding:16px; border:1px solid #24243a; border-radius:12px; background:#0e0e15; }
-    .k { color: #9aa1b5; font-size:13px; }
-    code { background:#10101a; padding:.2rem .35rem; border-radius:6px; border:1px solid #1e2033; }
-    a { color: var(--brand); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    .pill { display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border-radius:999px; background:#0d1a22; border:1px solid #1e3240; }
-    .ok { color:var(--ok) } .bad { color:var(--bad) }
-    .muted { color: var(--muted); }
-    .footer { margin-top:16px; color:#8a8fa3; font-size:13px; text-align:center; }
-    .btn {
-      display:inline-block; padding:10px 14px; border-radius:10px; border:1px solid #26304a;
-      background:#0f1a2a; color:#dbe9ff; text-decoration:none; font-weight:600;
+    .shell{width:100%; max-width:1000px}
+    .card{
+      background:linear-gradient(180deg,#171724 0%,#0f0f16 100%);
+      border:1px solid var(--line); border-radius:16px; padding:22px 22px 10px;
+      box-shadow:0 10px 30px #0006;
     }
-    .btn:hover { filter:brightness(1.15); }
-    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+    .head{display:flex; gap:12px; align-items:center; flex-wrap:wrap}
+    .pill{display:inline-flex; align-items:center; gap:10px; padding:7px 12px; border-radius:999px;
+      background:#0d1a22; border:1px solid #1e3240; color:#cfe8ff; font-weight:700}
+    h1{margin:8px 0 0; font-size:28px; letter-spacing:.2px}
+    p.lead{margin:6px 0 14px; color:var(--muted)}
+    .grid{display:grid; gap:16px; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); margin-top:14px}
+    .panel{padding:16px; border:1px solid #24243a; border-radius:12px; background:var(--panel)}
+    .panel h3{margin:0 0 8px}
+    .muted{color:var(--muted)}
+    .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+    pre{margin:8px 0 10px; padding:10px; background:#10101a; border:1px solid #1e2033; border-radius:8px; overflow:auto}
+    a{color:var(--brand); text-decoration:none}
+    a:hover{text-decoration:underline}
+    .btn{display:inline-block; padding:10px 14px; border-radius:10px; border:1px solid #26304a;
+      background:#0f1a2a; color:#dbe9ff; text-decoration:none; font-weight:600}
+    .btn:hover{filter:brightness(1.15)}
+    .k{color:#9aa1b5; font-size:13px}
+    .tags{display:flex; gap:8px; flex-wrap:wrap}
+    .tag{font-size:12px; padding:5px 8px; border-radius:999px; border:1px solid #2a2a3d; background:#11111a}
+    .ok{color:var(--ok)} .bad{color:var(--bad)} .warn{color:var(--warn)}
+    .footer{margin:12px 4px 6px; color:#8a8fa3; font-size:13px; text-align:center}
+    .row{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
+    .tiny{font-size:12px}
   </style>
 </head>
 <body>
   <main class="shell">
     <div class="card">
-      <div class="pill"><span>🚀</span><strong>Street Emporio Royal</strong><span class="muted">· Web + API</span></div>
-      <h1>Frontend vivo en Vercel</h1>
-      <p class="lead">Proxy a <code class="mono">api.streetemporioroyal.com</code> con <strong>rewrites</strong>. Sin cambios raros, sin romper el API.</p>
+      <div class="head">
+        <div class="pill">🚀 <strong>Street Emporio Royal</strong> <span class="muted">EGI Blueprint</span></div>
+        <div id="badges" class="tags tiny">
+          <span class="tag">Frontend: Vercel</span>
+          <span class="tag">API: Railway</span>
+          <span class="tag">Proxy /api/*</span>
+        </div>
+      </div>
+
+      <h1>Panel vivo</h1>
+      <p class="lead">Este frontend es estático y **proxy** a <code class="mono">api.streetemporioroyal.com</code> (seguro y sin CORS). Todo listo para producción.</p>
 
       <div class="grid">
         <section class="panel">
-          <h3>Estado del API (proxy)</h3>
-          <p class="muted">Llamando a <code>/api/health</code> vía Vercel → Railway</p>
-          <pre id="health" class="mono" style="white-space:pre-wrap;word-break:break-word;">Cargando…</pre>
-          <a class="btn" href="/api/health" target="_blank">Abrir /api/health</a>
+          <h3>Estado del API (vía proxy)</h3>
+          <p class="muted">Consulta automática a <code class="mono">/api/health</code> → Railway</p>
+          <pre id="health" class="mono">Cargando…</pre>
+          <div class="row">
+            <a class="btn" href="/api/health" target="_blank" rel="noopener">Abrir /api/health</a>
+            <span id="healthStatus" class="tiny muted"></span>
+          </div>
         </section>
 
         <section class="panel">
           <h3>Endpoints útiles</h3>
           <ul>
-            <li><a href="/api/health" target="_blank">/api/health</a> <span class="k">— ping</span></li>
-            <li><a href="/api/aegis/alert" target="_blank">/api/aegis/alert</a> <span class="k">— demo AEGIS</span></li>
-            <li><a href="/api/dominion/status" target="_blank">/api/dominion/status</a> <span class="k">— estado móvil</span></li>
-            <li><a href="/api/synapse/blueprint" target="_blank">/api/synapse/blueprint</a> <span class="k">— blueprint conceptual</span></li>
+            <li><a href="/api/health" target="_blank" rel="noopener">/api/health</a> <span class="k">— ping</span></li>
+            <li><a href="/api/aegis/alert" target="_blank" rel="noopener">/api/aegis/alert</a> <span class="k">— demo AEGIS</span></li>
+            <li><a href="/api/dominion/status" target="_blank" rel="noopener">/api/dominion/status</a> <span class="k">— estado móvil</span></li>
+            <li><a href="/api/synapse/blueprint" target="_blank" rel="noopener">/api/synapse/blueprint</a> <span class="k">— blueprint conceptual</span></li>
           </ul>
-          <p class="muted">Directo API: <a href="https://api.streetemporioroyal.com/health" target="_blank">https://api.streetemporioroyal.com/health</a></p>
+          <p class="muted">Directo API: <a href="https://api.streetemporioroyal.com/health" target="_blank" rel="noopener">https://api.streetemporioroyal.com/health</a></p>
         </section>
 
         <section class="panel">
           <h3>Meta</h3>
-          <p class="muted">Este sitio es 100% estático. Si mañana cambias el backend, los enlaces siguen sirviendo gracias al rewrite.</p>
+          <p class="muted">Frontend <b>100% estático</b>. Si cambias backend/domino mañana, el proxy lo absorbe sin romper el sitio.</p>
           <ul class="muted">
-            <li>⚙️ Deploy: Vercel (root <code>web/</code>)</li>
-            <li>🔁 Proxy: <code>/api/* → https://api.streetemporioroyal.com/*</code></li>
-            <li>🧠 API: Railway (tu Royal EGI)</li>
+            <li>⚙️ Deploy: Vercel (root <code class="mono">web/</code>)</li>
+            <li>↪️ Proxy: <code class="mono">/api/*</code> → <code class="mono">https://api.streetemporioroyal.com/*</code></li>
+            <li>🧠 Royal EGI: Railway</li>
           </ul>
         </section>
       </div>
 
-      <div id="statusLine" class="footer">Comprobando API…</div>
+      <div id="statusLine" class="footer">Comprobando servicios…</div>
     </div>
   </main>
 
   <script>
-    async function fetchJSON(url, opts={}) {
+    // util simple para fetch (intenta parsear JSON; si no, devuelve texto)
+    async function fetchJSON(url, opts = {}) {
       const r = await fetch(url, opts);
       const text = await r.text();
       try { return { ok: r.ok, json: JSON.parse(text) }; }
@@ -107,18 +131,23 @@
     (async () => {
       const el = document.getElementById('health');
       const statusLine = document.getElementById('statusLine');
+      const healthBadge = document.getElementById('healthStatus');
+
       try {
         const { ok, json } = await fetchJSON('/api/health', { cache: 'no-store' });
         if (ok) {
-          el.textContent = JSON.stringify(json, null, 2);
-          statusLine.innerHTML = 'Estado: <span class="ok">OK</span> — proxy funcionando.';
+          el.textContent = (typeof json === 'string') ? json : JSON.stringify(json, null, 2);
+          statusLine.innerHTML = 'Estado: <span class="ok">OK</span> — Proxy activo.';
+          healthBadge.innerHTML = '• <span class="ok">HEALTH OK</span>';
         } else {
-          el.textContent = typeof json === 'string' ? json : JSON.stringify(json, null, 2);
-          statusLine.innerHTML = 'Estado: <span class="bad">ERROR</span> — revisa Railway.';
+          el.textContent = (typeof json === 'string') ? json : JSON.stringify(json, null, 2);
+          statusLine.innerHTML = 'Estado: <span class="bad">ERROR</span> — revisa API.';
+          healthBadge.innerHTML = '• <span class="bad">HEALTH FAIL</span>';
         }
       } catch (e) {
         el.textContent = String(e);
-        statusLine.innerHTML = 'Estado: <span class="bad">OFF</span> — no se pudo contactar al API.';
+        statusLine.innerHTML = 'Estado: <span class="bad">FALLO DE RED</span>';
+        healthBadge.innerHTML = '• <span class="bad">NETWORK</span>';
       }
     })();
   </script>
