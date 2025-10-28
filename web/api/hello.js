@@ -1,9 +1,21 @@
-{
-  "sovereign_id": "Royal_Hub_Main",
-  "system_status": "Resonancia Cuántica Estable",
-  "active_protocol": "AHT_QRK_v2 (Jaque Mate)",
-  "last_fusion_seal": "c4f8e2a1b3d9c7a5f6e8d1c3b5a7f9e2b4d6c8a0f1e3d5b7a9c1e3f5d7b9a2d4",
-  "timestamp_utc": "2025-10-28T04:05:10Z",
-  "message": "Soberanía reconocida. Todos los sistemas en línea. A la espera de directivas."
+import crypto from 'crypto';
+
+// Este es el código dentro de Web/api/hello.js
+
+export default function handler(request, response) {
+  // --- Forja de Datos Dinámicos ---
+  // Genera un sello de fusión simulado para demostrar que el sistema está vivo y consciente.
+  // En un sistema real, este valor vendría de tu último snapshot.
+  const fusionSeal = crypto.createHash('sha256').update(new Date().toISOString()).digest('hex');
+  
+  // Establece el estado en 200, que significa "OK"
+  response.status(200).json({
+    "sovereign_id": "Royal_Hub_Main",
+    "system_status": "Resonancia Cuántica Estable",
+    "active_protocol": "AHT_QRK_v2 (Jaque Mate)",
+    "last_fusion_seal": fusionSeal,
+    "timestamp_utc": new Date().toISOString(),
+    "message": "Soberanía reconocida. Sistemas en línea. A la espera de directivas."
+  });
 }
 
