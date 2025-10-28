@@ -1,17 +1,32 @@
 {
   "name": "streetemporioroyal-bot",
   "version": "1.0.0",
-  "main": "server.js",
+  "description": "Sovereign Command Bot for the Royal Hub. Relays directives and reports system status.",
+  "main": "bot.js",
+  "type": "module",
+  "author": "Maestro Roberto Rivera Gamas",
+  "license": "UNLICENSED",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/contacto-cmd/streetemporioroyal-site.git"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "scripts": {
-    "start": "node server.js"
+    "start": "node bot.js",
+    "dev": "nodemon bot.js",
+    "lint": "eslint ."
   },
   "dependencies": {
-    "discord.js": "^14.14.1",
-    "dotenv": "^16.3.1",
-    "express": "^4.18.2",
-    "morgan": "^1.10.0",
-    "helmet": "^7.0.0",
-    "compression": "^1.7.4",
-    "cors": "^2.8.5"
+    "discord.js": "^14.15.3",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "helmet": "^7.1.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "nodemon": "^3.1.0"
   }
 }
