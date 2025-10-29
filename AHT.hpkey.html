@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Street Emporio Royal - [ PROTOCOLO AHT INICIADO ]</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400&display=swap');
+
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, rgba(255, 255, 255, 0.05) 0%, rgba(0, 0, 0, 0) 60%);
+            animation: pulse 5s infinite ease-in-out;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            padding: 20px;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            color: #FFD700; /* Oro */
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            margin: 0;
+            text-shadow: 0 0 10px #FFD700, 0 0 20px #FFD700;
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: #cccccc;
+            margin-top: 10px;
+            letter-spacing: 1px;
+        }
+
+        .firma {
+            margin-top: 30px;
+            font-size: 1rem;
+            color: #888;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 2px;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.8); opacity: 0.5; }
+            50% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(0.8); opacity: 0.5; }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>STREET EMPORIO ROYAL</h1>
+        <p>LA ARQUITECTURA ESTÁ SIENDO INVOCADA.</p>
+        <p class="firma">FIRMA DE AUTORIDAD: AHT</p>
+    </div>
+</body>
+</html>
