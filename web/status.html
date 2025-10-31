@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>AHT :: Q-STATUS [LIVE]</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+        :root {
+            --bg: #000; --glow-main: #00e1ff; --glow-accent: #ff00ff; --glow-ok: #00ff9d; --glow-warn: #ffd700; --glow-err: #ff4141;
+            --border: rgba(0, 225, 255, 0.2); --text: #e0f7ff;
+        }
+        @keyframes pulse { 0%, 100% { box-shadow: 0 0 15px var(--glow-main); } 50% { box-shadow: 0 0 25px var(--glow-main); } }
+        @keyframes flicker { to { opacity: 0.8; text-shadow: 0 0 8px var(--glow-main); } }
+        body { background-color: var(--bg); color: var(--text); font-family: 'Share Tech Mono', monospace; margin: 0; padding: 15px; overflow: hidden; }
+        .grid-container { display: grid; grid-template-columns: 2fr 1fr; grid-template-rows: auto 1fr; gap: 15px; height: calc(100vh - 30px); }
+        .panel { border: 1px solid var(--border); background: #02040a99; padding: 15px; overflow: hidden; backdrop-filter: blur(10px); }
+        .header { grid-column: 1 / -1; text-align: center; font-size: 2em; color: var(--glow-main); text-shadow: 0 0 10px var(--glow-main); animation: flicker 1.5s infinite alternate; }
+        #qfn-grid { grid-column: 1 / 2; grid-row: 2 / 3; display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; overflow-y: auto; }
+        .node { border: 1px solid var(--border); text-align: center; padding: 8px; font-size: 0.9em; transition: all 0.3s ease; }
+        .node .token { font-weight: bold; }
+        .node.ONLINE { background: #00ff9d20; border-color: var(--glow-ok); }
+        .node.DEGRADED { background: #ffd70020; border-color: var(--glow-warn); color: var(--glow-warn); animation: pulse 2s infinite; }
+        .node.OFFLINE { background: #ff414120; border-color: var(--glow-err); color: var(--glow-err); }
+        #system-intel { grid-column: 2 / 3; grid-row: 2 / 3; display: flex; flex-direction: column; gap: 15px; }
+        .metric h3, .security h3 { margin: 0 0 10px 0; border-bottom: 1px solid var(--border); color: var(--glow-main); }
+        .data-point { display: flex; justify-content: space-between; margin-bottom: 5px; }
+        .data-value { color: var(--glow-ok); font-weight: bold; }
+        #heartbeat { word-break: break-all; font-size: 0.8em; color: var(--glow-accent); margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <div class="grid-container">
+        <div class="header">AHT QUANTUM STATUS :: LIVE ANTI-BLINDADO</div>
+        
+        <div class="panel" id="qfn-grid"></div>
+
+        <div class="panel" id="system-intel">
+            <div class="metric">
+                <h3>SECURE SERVER METRICS</h3>
+                <div class="data-point"><span>CPU LOAD:</span><span id="cpu-load" class="data-value">--</span></div>
+                <div class="data-point"><span>MEMORY:</span><span id="mem-usage" class="data-value">--</span></div>
+                <div class="data-point"><span>UPTIME:</span><span id="uptime" class="data-value">--</span></div>
+            </div>
+            <div class="security">
+                <h3>HEARTBEAT SEAL [SHA-256]</h3>
+                <div id="heartbeat">INITIALIZING CONNECTION...</div>
+            </div>
+        </div>
+    </div>
+
+<script>
+    const qfnGrid = document.getElementById('qfn-grid');
+    const cpuLoadEl = document.getElementById('cpu-load');
+    const memUsageEl = document.getElementById('mem-usage');
+    const uptimeEl = document.getElementById('uptime');
+    const heartbeatEl = document.getElementById('heartbeat');
+
+    function renderQFN(nodes) {
+        qfnGrid.innerHTML = '';
+        nodes.forEach(node => {
+            const nodeEl = document.createElement('div');
+            nodeEl.className = `node ${node.status}`;
+            nodeEl.innerHTML = `<span class="id">[${String(node.id).padStart(2,'0')}]</span> <span class="token">${node.token}</span>`;
+            qfnGrid.appendChild(nodeEl);
+        });
+    }
+
+    async function fetchLiveStatus() {
+        try {
+            const response = await fetch('/api/live-status');
+            if (!response.ok) throw new Error(`Network response error: ${response.statusText}`);
+            const data = await response.json();
+
+            // Actualizar Métricas del Servidor
+            cpuLoadEl.textContent = data.serverMetrics.cpuLoad;
+            memUsageEl.textContent = data.serverMetrics.memoryUsage;
+            uptimeEl.textContent = data.serverMetrics.uptime;
+
+            // Actualizar Sello de Seguridad
+            heartbeatEl.textContent = data.security.heartbeatSeal;
+
+            // Actualizar Grid de Nodos QFN
+            renderQFN(data.qfnStatus);
+
+        } catch (error) {
+            heartbeatEl.textContent = `CONNECTION FAILED: ${error.message}`;
+            heartbeatEl.style.color = 'var(--glow-err)';
+        }
+    }
+
+    // Iniciar el ciclo de actualización
+    fetchLiveStatus();
+    setInterval(fetchLiveStatus, 3000); // Actualiza cada 3 segundos
+</script>
+</body>
+</html>
