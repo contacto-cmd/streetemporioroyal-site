@@ -6,6 +6,19 @@ const path = require('path');
 const { SignJWT, importPKCS8 } = require('jose');
 const { Pool } = require('pg');
 
+// ...
+const { Pool } = require('pg');
+const ahtRouter = require('./aht.js'); // <--- PÉGALA AQUÍ
+
+const PORT = process.env.PORT || 3000;
+// ...
+
+const app = express();
+app.use('/api', ahtRouter); // <--- PÉGALA AQUÍ
+
+app.use(bodyParser.json());
+// ...
+
 const PORT = process.env.PORT || 3000;
 const JOBS_FILE = path.join(__dirname, 'jobs.json');
 const DB = new Pool({ connectionString: process.env.DATABASE_URL, ssl: { rejectUnauthorized: false } });
