@@ -1,0 +1,70 @@
+<!-- Inserta esto dentro de tu <script> al final, reemplazando simulateSystemCheck() -->
+const API_BASE = "https://api.streetemporioroyal.com"; // ajusta si tu dominio es otro
+
+async function fetchStatus() {
+  try {
+    const r = await fetch(API_BASE + "/api/status");
+    if (!r.ok) throw new Error("status fetch failed");
+    const s = await r.json();
+    updateStatus('sec-status', s.sec === true ? 'ONLINE' : 'OFFLINE');
+    updateStatus('api-status', s.api === true ? 'ONLINE' : 'OFFLINE');
+    updateStatus('bot-status', s.bot === true ? 'ONLINE' : 'OFFLINE');
+    updateStatus('seal-status', s.seal_verified ? 'VERIFIED' : 'UNVERIFIED');
+    document.getElementById('last-sync').textContent = s.lastSync || new Date().toISOString();
+
+    // render QFN nodes from server (if provided)
+    if (Array.isArray(s.qfn)) {
+      const list = document.getElementById('qfn-list');
+      list.innerHTML = '';
+      s.qfn.slice(0, 12).forEach(node => {
+        const li = document.createElement('li');
+        li.innerHTML = `NODE: <span class="token">${node.token}</span> :: STATUS: <span class="status-light ${node.status.toLowerCase()}">${node.status}</span>`;
+        list.appendChild(li);
+      });
+    }
+  } catch (e) {
+    console.warn("Fetch status error", e);
+    // show offline hints
+    updateStatus('api-status', 'OFFLINE');
+    updateStatus('sec-status', 'OFFLINE');
+  }
+}
+
+// command helper: sends a signed command or token-auth
+async function sendCommand(commandText) {
+  try {
+    // Short dev flow: use Authorization Bearer token (recommended)
+    // 1) request token from /api/token (or get stored token)
+    const tokenResp = await fetch(API_BASE + "/api/token", {
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({ sub: "web-ui", scope: ["aht:exec"] })
+    });
+    const tk = await tokenResp.json();
+    if (!tk.token) throw new Error("No token");
+
+    const r = await fetch(API_BASE + "/api/execute", {
+      method: "POST",
+      headers: {
+        "Content-Type":"application/json",
+        "Authorization": "Bearer " + tk.token
+      },
+      body: JSON.stringify({ payload: commandText })
+    });
+    const j = await r.json();
+    log("// EXECUTE RESPONSE:", "grey");
+    log(JSON.stringify(j, null, 2));
+  } catch (err) {
+    log("// EXEC ERROR: " + err.message, "error");
+  }
+}
+
+// Interfaz: botón rápido para enviar comando demo
+const quickBtn = document.createElement('button');
+quickBtn.textContent = "SEND: JAQUE-MATE DEMO";
+quickBtn.onclick = () => sendCommand("deploy crown-pacific --priority high");
+document.getElementById('system-status').appendChild(quickBtn);
+
+// Start polling status
+fetchStatus();
+setInterval(fetchStatus, 5000); // cada 5s
