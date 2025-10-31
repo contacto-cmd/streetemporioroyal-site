@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>AHT Sovereign Hub</title>
+    <style>
+        :root {
+            --bg-color: #02040a; --primary-glow: #00e1ff; --secondary-glow: #3dffab; --error-glow: #ff4141;
+            --border-color: rgba(0, 225, 255, 0.3); --text-color: #e0f7ff;
+            --glow-shadow: 0 0 5px var(--primary-glow), 0 0 10px var(--primary-glow);
+        }
+        @keyframes flicker { 0%, 100% { opacity: 1; } 50% { opacity: 0.8; } }
+        body {
+            background-color: var(--bg-color); color: var(--text-color); font-family: 'Share Tech Mono', monospace;
+            margin: 0; padding: 15px; overflow: hidden; display: flex; flex-direction: column; height: 100vh;
+            box-sizing: border-box; text-transform: uppercase;
+        }
+        h1, h2 { margin: 0; padding-bottom: 10px; color: var(--primary-glow); text-shadow: var(--glow-shadow); text-align: center; animation: flicker 3s infinite; }
+        .main-container { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; flex-grow: 1; height: calc(100% - 100px); }
+        .panel { border: 1px solid var(--border-color); padding: 15px; background: rgba(0, 25, 35, 0.6); backdrop-filter: blur(5px); box-shadow: inset 0 0 15px var(--border-color); overflow-y: auto; }
+        .panel h2 { font-size: 1.2em; border-bottom: 1px solid var(--border-color); }
+        #terminal-container { grid-column: 1 / -1; display: flex; flex-direction: column; }
+        #output { flex-grow: 1; overflow-y: auto; margin-bottom: 10px; }
+        .line { display: block; white-space: pre-wrap; word-break: break-all; margin-bottom: 2px; }
+        .line.prompt::before { content: 'HP_KEY> '; color: var(--secondary-glow); }
+        .line.response { color: var(--text-color); } .line.error { color: var(--error-glow); } .line.system { color: #888; }
+        #input { background: transparent; border: none; border-bottom: 1px solid var(--secondary-glow); color: var(--secondary-glow); font-size: 16px; width: 100%; padding: 5px; outline: none; }
+        .status-item { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.9em; }
+        .status-light { font-weight: bold; }
+        .status-light.online { color: var(--secondary-glow); text-shadow: 0 0 5px var(--secondary-glow); }
+        .status-light.offline { color: var(--error-glow); text-shadow: 0 0 5px var(--error-glow); }
+        .qfn-list { padding-left: 0; margin: 0; }
+        .qfn-list li { list-style-type: none; margin-bottom: 5px; white-space: nowrap; }
+        .qfn-list .token { color: var(--primary-glow); } .qfn-list .id { color: var(--secondary-glow); }
+    </style>
+</head>
+<body>
+    <h1>AHT SOVEREIGN OPERATIONS HUB</h1>
+    <div class="main-container">
+        <div class="panel" id="system-status">
+            <h2>SYSTEM STATUS</h2>
+            <div class="status-item"><span>SEC_API</span><span id="api-status" class="status-light">OFFLINE</span></div>
+            <div class="status-item"><span>DISCORD_BOT</span><span id="bot-status" class="status-light">OFFLINE</span></div>
+            <div class="status-item"><span>DIPLOMAT_SEAL</span><span id="seal-status" class="status-light">VERIFIED</span></div>
+            <div class="status-item"><span>LAST_SYNC</span><span id="last-sync" class="status-light">...</span></div>
+        </div>
+        <div class="panel" id="qfn-nodes">
+            <h2>QFN MANIFEST [40 NODES]</h2>
+            <div id="qfn-list" class="qfn-list"></div>
+        </div>
+        <div class="panel" id="terminal-container">
+            <h2>HP_KEY TERMINAL</h2>
+            <div id="output"></div>
+            <input type="text" id="input" autofocus autocomplete="off" spellcheck="false">
+        </div>
+    </div>
+
+<script>
+    // --- BEGIN EMBEDDED SYSTEM ---
+    const output = document.getElementById('output');
+    const input = document.getElementById('input');
+    const qfnList = document.getElementById('qfn-list');
+
+    const QFN_MANIFEST = [{"id": 1, "token": "AETHER-TORUS-01"}, {"id": 2, "token": "PHASE-RING-02"}, {"id": 3, "token": "ENTROPY-BRAID-03"}, {"id": 4, "token": "HIGGS-LOCK-04"}, {"id": 5, "token": "HEISEN-MATRIX-05"}, {"id": 6, "token": "KNOT-TORUS-06"}, {"id": 7, "token": "HODGE-MU-07"}, {"id": 8, "token": "GROTH-SHEAF-08"}, {"id": 9, "token": "SUPERSTRING-ISOR-09"}, {"id": 10, "token": "POINCARE-NU-10"}, {"id": 11, "token": "QUANTUM-COHOM-11"}, {"id": 12, "token": "MINKOWSKI-PSI-12"}, {"id": 13, "token": "TOPO-TENSOR-13"}, {"id": 14, "token": "ISOFIELD-E-14"}, {"id": 15, "token": "QUANTUM-WEAVE-15"}, {"id": 16, "token": "RING-OMEGA-16"}, {"id": 17, "token": "ISOMORPH-ENT-17"}, {"id": 18, "token": "FERMION-GAUGE-18"}, {"id": 19, "token": "TAU-OPERATOR-19"}, {"id": 20, "token": "TOROIDAL-KNOT-20"}, {"id": 21, "token": "ALGEBRAIC-MU-21"}, {"id": 22, "token": "SHEAF-GROTH-22"}, {"id": 23, "token": "STRING-ISOR-23"}, {"id": 24, "token": "DUALITY-POIN-24"}, {"id": 25, "token": "COHOM-TENSOR-25"}, {"id": 26, "token": "HYPER-PSI-26"}, {"id": 27, "token": "LAMBDA-MANIFOLD-27"}, {"id": 28, "token": "TORUS-STABILIZER-28"}, {"id": 29, "token": "AUX-QUANTUM-29"}, {"id": 30, "token": "OMEGA-RING-30"}, {"id": 31, "token": "ZETA-ISOM-31"}, {"id": 32, "token": "BRANE-HIGGS-32"}, {"id": 33, "token": "UNSHIELD-TAU-33"}, {"id": 34, "token": "CONJUGATE-KNOT-34"}, {"id": 35, "token": "DECOUPLE-MU-35"}, {"id": 36, "token": "ANTIARMOR-ETA-36"}, {"id": 37, "token": "COVARIANT-ISOR-37"}, {"id": 38, "token": "COHOMO-BREAK-38"}, {"id": 39, "token": "ANTI-SHIELD-KAPPA-39"}, {"id": 40, "token": "HYPERPLANE-PHI-40"}];
+
+    const log = (message, type = 'response') => {
+        const line = document.createElement('span');
+        line.className = `line ${type}`;
+        line.textContent = message;
+        output.appendChild(line);
+        output.scrollTop = output.scrollHeight;
+    };
+
+    const updateStatus = (elementId, status) => {
+        const el = document.getElementById(elementId);
+        el.textContent = status;
+        el.className = 'status-light ' + (status === 'ONLINE' ? 'online' : 'offline');
+    };
+    
+    const findNode = (id) => QFN_MANIFEST.find(n => n.id === parseInt(id) || n.token.toUpperCase() === id.toUpperCase());
+
+    const executeCommand = async (cmd) => {
+        log(cmd, 'prompt');
+        const [command, ...args] = cmd.toLowerCase().split(' ');
+
+        switch (command) {
+            case 'help':
+                log('Commands: list, get <id|token>, ping <id|token>, status, clear');
+                break;
+            case 'clear':
+                output.innerHTML = '';
+                break;
+            case 'list':
+                log('Listing all 40 QFN nodes...');
+                QFN_MANIFEST.forEach(n => log(`[${String(n.id).padStart(2, '0')}] ${n.token}`, 'system'));
+                break;
+            case 'get':
+                const nodeInfo = findNode(args[0]);
+                log(nodeInfo ? `Node Found: [${nodeInfo.id}] ${nodeInfo.token}` : `Error: Node '${args[0]}' not found.`, nodeInfo ? 'response' : 'error');
+                break;
+            case 'ping':
+                const nodeToPing = findNode(args[0]);
+                if (!nodeToPing) { log(`Error: Node '${args[0]}' not found.`, 'error'); break; }
+                log(`Pinging ${nodeToPing.token}...`, 'system');
+                // Simulación de ping a la API
+                setTimeout(() => log(`Response from ${nodeToPing.token}: ONLINE, Latency: ${50 + Math.random()*150 | 0}ms`), 500);
+                break;
+            case 'status':
+                log('Running system diagnostics...', 'system');
+                updateAllStatus();
+                break;
+            default:
+                log(`Error: Command not found '${command}'. Type 'help'.`, 'error');
+        }
+    };
+
+    input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && input.value.trim() !== '') {
+            executeCommand(input.value.trim());
+            input.value = '';
+        }
+    });
+    
+    function updateAllStatus() {
+        updateStatus('api-status', Math.random() > 0.1 ? 'ONLINE' : 'OFFLINE');
+        updateStatus('bot-status', Math.random() > 0.2 ? 'ONLINE' : 'OFFLINE');
+        document.getElementById('last-sync').textContent = new Date().toLocaleTimeString();
+    }
+    
+    function init() {
+        QFN_MANIFEST.forEach(node => {
+            const item = document.createElement('div');
+            item.innerHTML = `<span class="id">[${String(node.id).padStart(2,'0')}]</span> <span class="token">${node.token}</span>`;
+            qfnList.appendChild(item);
+        });
+        log('AHT Sovereign Operations Hub Initialized.', 'system');
+        log("Type 'help' for available commands.", 'system');
+        updateAllStatus();
+        setInterval(updateAllStatus, 7000);
+    }
+
+    init();
+    // --- END EMBEDDED SYSTEM ---
+</script>
+</body>
+</html>
