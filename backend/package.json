@@ -1,0 +1,11 @@
+{
+  "name":"royal-streetemporioroyal-engine",
+  "version":"1.0.0",
+  "main":"backend/royal-sync-bot.js",
+  "scripts":{"start":"node backend/royal-sync-bot.js"},
+  "dependencies":{
+    "express":"^4.18.2",
+    "node-fetch":"^2.6.7",
+    "octokit":"^2.0.0"
+  }
+}
