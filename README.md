@@ -26,6 +26,6 @@ Sistema base del núcleo de IA conectado a Railway y GitHub.
    - SYNAPSE_VECTOR
    - ALLOW_ORIGINS
 
-## Ejemplo de prueba
+## real time backend AI
 GET https://api.streetemporioroyal.com/health
 → `{ "ok": true, "service": "royal-egi-blueprint" }`
