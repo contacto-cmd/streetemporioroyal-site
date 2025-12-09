@@ -1,47 +1,4 @@
-#!/usr/bin/env bash
-set -e
-
-ROOT_DIR="royal-throne-v3"
-echo "Creando estructura en ./${ROOT_DIR}"
-rm -rf "${ROOT_DIR}"
-mkdir -p "${ROOT_DIR}/backend/routes" "${ROOT_DIR}/backend/services" "${ROOT_DIR}/web/pages" "${ROOT_DIR}/web/public" "${ROOT_DIR}/.github/workflows"
-
-# COPIAR cert (asegúrate de que exista en /mnt/data)
-CERT_SRC="/mnt/data/A_digital_certificate_in_portrait_orientation_visu.png"
-if [ -f "$CERT_SRC" ]; then
-  cp "$CERT_SRC" "${ROOT_DIR}/web/public/certificado-royal.png"
-  echo "Certificado copiado a web/public/"
-else
-  echo "ADVERTENCIA: no se encontró certificado en $CERT_SRC — añade el archivo manualmente."
-fi
-
-# Dockerfile
-cat > "${ROOT_DIR}/Dockerfile" <<'EOF'
-# ---- Base ----
-FROM node:18 AS base
-WORKDIR /app
-
-# ---- Backend ----
-FROM base AS backend
-WORKDIR /app/backend
-COPY backend/package.json .
-RUN npm install
-COPY backend .
-
-# ---- Web ----
-FROM base AS web
-WORKDIR /app/web
-COPY web/package.json .
-RUN npm install
-COPY web .
-RUN npm run build
-
-# ---- Final ----
-FROM node:18
-WORKDIR /app
-COPY --from=backend /app/backend backend
-COPY --from=web /app/web web
-CMD ["node", "backend/server.js"]
+#!/kend/server.js"]
 EOF
 
 # GitHub Action
@@ -230,7 +187,7 @@ cat > "${ROOT_DIR}/web/package.json" <<'EOF'
 {
   "name": "royal-web",
   "version": "1.0.0",
-  "scripts": {
+  "scripts": {de
     "dev": "next dev -p 3001",
     "build": "next build",
     "start": "next start -p 3001"
