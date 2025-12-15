@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>STREET EMPORIO ROYAL</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <style>
+    :root { --gold: #ffd700; --cyan: #00ffff; --dark: #020205; --panel: #0a0a0f; }
+    body { margin: 0; background: var(--dark); color: #fff; font-family: 'Share Tech Mono', monospace; overflow: hidden; display: flex; flex-direction: column; height: 100vh; }
+    header { padding: 20px; border-bottom: 1px solid #222; display: flex; justify-content: space-between; align-items: center; }
+    h1 { margin: 0; font-family: 'Orbitron', sans-serif; color: var(--gold); font-size: 1.1rem; letter-spacing: 1px; line-height: 1.2; text-transform: uppercase; }
+    .status-dot { width: 8px; height: 8px; background: var(--cyan); border-radius: 50%; box-shadow: 0 0 8px var(--cyan); animation: pulse 2s infinite; }
+    main { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 20px; }
+    .owner-panel { background: rgba(20,20,20,0.8); border: 1px solid #333; border-right: 3px solid var(--gold); border-radius: 8px; padding: 15px; margin-bottom: 10px; }
+    .label { color: #666; font-size: 0.6rem; letter-spacing: 1px; margin-bottom: 2px; }
+    .data { color: #fff; font-size: 0.9rem; margin-bottom: 8px; font-weight: bold; }
+    .verified { color: var(--cyan); font-size: 0.6rem; display: flex; align-items: center; gap: 5px; }
+    .card-panel { background: var(--panel); border: 1px solid #333; border-left: 3px solid var(--gold); border-radius: 12px; padding: 20px; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+    #canvas-container { width: 100%; height: 180px; background: #000; border-radius: 8px; border: 1px solid #222; margin-top: 10px; position: relative; }
+    .chat-section { border-top: 1px solid #222; padding-top: 10px; }
+    .chat-box { background: #111; border-radius: 8px; padding: 15px; border: 1px solid #222; font-size: 0.8rem; color: #888; margin-top: 5px; }
+    footer { padding: 15px; background: #080808; border-top: 1px solid #222; }
+    .input-bar { display: flex; background: #111; border: 1px solid #333; border-radius: 30px; padding: 12px 20px; align-items: center; justify-content: space-between; }
+    input { background: transparent; border: none; color: #fff; flex: 1; font-family: inherit; outline: none; font-size: 0.9rem; }
+    @keyframes pulse { 0% {opacity: 1} 50% {opacity: 0.5} 100% {opacity: 1} }
+  </style>
+  <script type="importmap"> { "imports": { "three": "https://unpkg.com/three@0.160.0/build/three.module.js" } } </script>
+</head>
+<body>
+  <header>
+    <h1>STREET EMPORIO<br><span style="color:#fff;">ROYAL</span></h1>
+    <div class="status-dot"></div>
+  </header>
+  <main>
+    <div class="owner-panel">
+      <div style="display:flex; justify-content:space-between;">
+        <div><div class="label">OWNER / CEO</div><div class="data" style="color:var(--gold)">ROBERTO RIVERA GAMAS</div></div>
+        <div style="text-align:right"><div class="label">RFC</div><div class="data">RIGR840827PJ0</div></div>
+      </div>
+      <div class="label">OFFICIAL CONTACT</div><div class="data" style="font-size:0.7rem">contacto@streetemporioroyal.com</div>
+      <div class="verified">✓ IDENTITY VERIFIED // THRONE V3.0</div>
+    </div>
+    <div class="card-panel">
+      <div style="display:flex; justify-content:space-between; margin-bottom:10px">
+        <span style="font-family:'Orbitron'">❖ DEPLOYMENT</span>
+        <span style="font-size:0.6rem; border:1px solid var(--cyan); color:var(--cyan); padding:2px 6px; border-radius:4px">ACTIVE</span>
+      </div>
+      <div style="font-size: 0.8rem; color: #aaa;">Project: Royal Gold Pass<br>Status: Rendering...</div>
+      <div id="canvas-container"></div>
+    </div>
+    <div class="chat-section">
+      <div style="font-family:'Orbitron'; color:var(--gold); font-size:0.9rem;">💬 SYSTEM LOG</div>
+      <div class="chat-box">> INITIALIZING...<br>> USER AUTH: ROBERTO RIVERA G.<br>> PERMISSIONS: <span style="color:var(--gold)">ADMIN / ROOT</span><br><span style="color:var(--cyan)">System Ready.</span></div>
+    </div>
+  </main>
+  <footer>
+    <div class="input-bar"><input type="text" placeholder="Enter Command..."><span style="font-size:1.2rem">🎤</span></div>
+    <div style="font-size:0.6rem; color:#444; margin-top:5px; text-align:right;">ID: RIGR-84-ROYAL</div>
+  </footer>
+  <script type="module">
+    import * as THREE from 'three';
+    const container = document.getElementById('canvas-container');
+    const scene = new THREE.Scene(); scene.background = new THREE.Color(0x000000);
+    const camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 1000); camera.position.z = 4;
+    const renderer = new THREE.WebGLRenderer({antialias: true}); renderer.setSize(container.clientWidth, container.clientHeight); container.appendChild(renderer.domElement);
+    const geometry = new THREE.BoxGeometry(2.2, 1.4, 0.05);
+    const matGold = new THREE.MeshStandardMaterial({color: 0xffd700, roughness: 0.3, metalness: 0.9});
+    const card = new THREE.Mesh(geometry, matGold); scene.add(card);
+    const dustGeo = new THREE.BufferGeometry(); const count = 300; const pos = new Float32Array(count * 3);
+    for(let i=0; i<count*3; i++) pos[i] = (Math.random() - 0.5) * 6;
+    dustGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+    const dust = new THREE.Points(dustGeo, new THREE.PointsMaterial({color:0xffd700, size:0.03})); scene.add(dust);
+    const light = new THREE.PointLight(0xffffff, 2, 10); light.position.set(2, 2, 3); scene.add(light); scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+    function animate() { requestAnimationFrame(animate); card.rotation.y += 0.01; card.rotation.x = Math.sin(Date.now() * 0.002) * 0.15; dust.rotation.y -= 0.002; renderer.render(scene, camera); }
+    window.addEventListener('resize', () => { camera.aspect = container.clientWidth / container.clientHeight; camera.updateProjectionMatrix(); renderer.setSize(container.clientWidth, container.clientHeight); });
+    animate();
+  </script>
+</body>
+</html>
