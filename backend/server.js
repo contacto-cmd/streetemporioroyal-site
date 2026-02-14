@@ -1,29 +1,32 @@
 const express = require('express');
-const cors = require('cors');
-
+const path = require('path');
 const app = express();
-const port = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 
-// Middleware
-app.use(cors());
+// Middleware to parse JSON requests
 app.use(express.json());
 
-// Sample QFN manifest with 40 nodes
-const qfnManifest = Array.from({ length: 40 }, (_, i) => ({
-  id: i + 1,
-  name: `Node ${i + 1}`,
-  status: 'active', // Example property
-  // More properties can be added as needed
-}));
+// Serve static files from 'public' directory
+app.use(express.static(path.join(__dirname, 'public')));
 
-// API endpoint to retrieve the QFN manifest
-app.get('/api/qfn-manifest', (req, res) => {
-  res.json(qfnManifest);
+// API endpoint examples
+app.get('/api/data', (req, res) => {
+    res.json({ message: 'Hello from the API' });
+});
+
+// Add 39 more endpoint examples as necessary...
+
+// 40 QFN Nodes Manifest placeholder
+const qfnNodesManifest = [
+    // Fill with actual QFN nodes data as per requirement...
+];
+
+// API endpoint to retrieve QFN node manifest
+app.get('/api/qfn-nodes', (req, res) => {
+    res.json(qfnNodesManifest);
 });
 
 // Start the server
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
 });
-
-module.exports = app;
