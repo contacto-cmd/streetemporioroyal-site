@@ -1,0 +1,1 @@
+{\n  "version": 2,\n  "builds": [\n    {\n      "src": "server.js",\n      "use": "@vercel/node"\n    }\n  ],\n  "routes": [\n    {\n      "src": "/(.*)",\n      "dest": "server.js"\n    }\n  ],\n  "env": {\n    "NODE_ENV": "production",\n    "PORT": "5000"\n  }\n}
