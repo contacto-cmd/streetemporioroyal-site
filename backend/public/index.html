@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AHT Sovereign Operations Hub</title>
+    <script>
+        async function fetchSystemStatus() {
+            const response = await fetch('/api/system-status');
+            const data = await response.json();
+            document.getElementById('system-status').innerText = JSON.stringify(data, null, 2);
+        }
+
+        async function fetchQfnNodes() {
+            const response = await fetch('/api/qfn-nodes');
+            const data = await response.json();
+            document.getElementById('qfn-nodes').innerText = JSON.stringify(data, null, 2);
+        }
+
+        async function pingNode(nodeId) {
+            const response = await fetch(`/api/ping/${nodeId}`);
+            const data = await response.json();
+            document.getElementById('ping-result').innerText = JSON.stringify(data, null, 2);
+        }
+    </script>
+</head>
+<body>
+    <h1>AHT Sovereign Operations Hub</h1>
+    <div>
+        <h2>System Status</h2>
+        <button onclick="fetchSystemStatus()">Fetch System Status</button>
+        <pre id="system-status"></pre>
+    </div>
+    <div>
+        <h2>QFN Nodes</h2>
+        <button onclick="fetchQfnNodes()">Fetch QFN Nodes</button>
+        <pre id="qfn-nodes"></pre>
+    </div>
+    <div>
+        <h2>Ping Node</h2>
+        <input type="text" id="nodeId" placeholder="Enter Node ID" />
+        <button onclick="pingNode(document.getElementById('nodeId').value)">Ping Node</button>
+        <pre id="ping-result"></pre>
+    </div>
+</body>
+</html>
