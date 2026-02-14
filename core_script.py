@@ -1,1 +1,0 @@
-print("Royal Dominion AI Core Activo")
