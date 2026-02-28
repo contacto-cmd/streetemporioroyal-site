@@ -7,3 +7,6 @@ yarn-error.log*
 coverage/
 dist/
 build/
+.next/
+*.tsbuildinfo
+next-env.d.ts
