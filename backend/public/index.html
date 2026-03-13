@@ -1,158 +1,78 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>AHT-GATEWAY • Sovereign Enterprise Core</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #0a0f29, #1c2a48);
-      color: #f5f5f5;
-      margin: 0;
-      padding: 0;
-    }
-    header {
-      background: #0d1b3d;
-      padding: 3rem;
-      text-align: center;
-      border-bottom: 6px solid #ffd700;
-    }
-    header h1 {
-      font-size: 3rem;
-      margin: 0;
-      color: #ffd700;
-      text-transform: uppercase;
-      letter-spacing: 4px;
-    }
-    header p {
-      font-size: 1.2rem;
-      color: #00c4ff;
-      margin-top: 0.5rem;
-    }
-    .hero {
-      text-align: center;
-      padding: 4rem 2rem;
-      background: linear-gradient(90deg, #1c2a48, #0a0f29);
-    }
-    .hero button {
-      background: #ffd700;
-      border: none;
-      padding: 1rem 2rem;
-      font-size: 1.2rem;
-      font-weight: bold;
-      cursor: pointer;
-      border-radius: 8px;
-      margin-top: 2rem;
-    }
-    .hero button:hover {
-      background: #e6b800;
-    }
-    section {
-      padding: 2rem;
-      border-bottom: 1px solid #333;
-    }
-    h2 {
-      color: #00c4ff;
-      margin-bottom: 1rem;
-    }
-    button {
-      background: #ffd700;
-      border: none;
-      padding: 0.8rem 1.5rem;
-      font-weight: bold;
-      cursor: pointer;
-      margin-bottom: 1rem;
-      border-radius: 6px;
-    }
-    button:hover {
-      background: #e6b800;
-    }
-    pre {
-      background: #111;
-      padding: 1rem;
-      border-radius: 6px;
-      color: #0f0;
-      font-size: 0.9rem;
-      overflow-x: auto;
-    }
-    footer {
-      text-align: center;
-      padding: 1rem;
-      background: #0d1b3d;
-      color: #888;
-      font-size: 0.8rem;
-    }
-  </style>
-  <script>
-    async function fetchSystemStatus() {
-      const response = await fetch('/api/system-status');
-      const data = await response.json();
-      document.getElementById('system-status').innerText = JSON.stringify(data, null, 2);
-    }
-
-    async function fetchQfnNodes() {
-      const response = await fetch('/api/qfn-nodes');
-      const data = await response.json();
-      document.getElementById('qfn-nodes').innerText = JSON.stringify(data, null, 2);
-    }
-
-    async function pingNode(nodeId) {
-      const response = await fetch(`/api/ping/${nodeId}`);
-      const data = await response.json();
-      document.getElementById('ping-result').innerText = JSON.stringify(data, null, 2);
-    }
-
-    async function executeCommand() {
-      const cmd = document.getElementById('commandInput').value;
-      const response = await fetch(`/api/command`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ command: cmd })
-      });
-      const data = await response.json();
-      document.getElementById('command-result').innerText = JSON.stringify(data, null, 2);
-    }
-  </script>
+  <title>AHT SUPREM HYBRID — Sovereign Enterprise Gateway</title>
+  <meta name="description" content="SER27 LGORITMO · Quantum Loop · Sovereign Enterprise">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header>
-    <h1>👑 AHT-GATEWAY</h1>
-    <p>Supreme Hybrid • Sovereign Enterprise Orchestrator</p>
+
+  <!-- Hero Section -->
+  <header class="hero">
+    <div class="seal-ser">SER — Sovereign Enterprise Registry</div>
+    <h1>AHT SUPREM HYBRID — Sovereign Enterprise Gateway</h1>
+    <h2>Powered by AHT-GATEWAY & Brain 27</h2>
+    <div class="buttons">
+      <a href="/brainhq" class="btn">Enter Brain HQ</a>
+      <a href="/license" class="btn">Request Enterprise License</a>
+    </div>
   </header>
 
-  <div class="hero">
-    <h2>Welcome to the Presidential Core</h2>
-    <p>Enter the sovereign ecosystem and orchestrate every command.</p>
-    <button onclick="document.getElementById('ecosystem').scrollIntoView()">Enter Sovereign Hub</button>
-  </div>
-
-  <section id="ecosystem">
-    <h2>System Status</h2>
-    <button onclick="fetchSystemStatus()">Fetch System Status</button>
-    <pre id="system-status">Awaiting ceremonial activation...</pre>
+  <!-- License Section -->
+  <section class="license">
+    <h3>Licencia Enterprise</h3>
+    <p>Token ID: HEISEN-MATRIX-05</p>
+    <p>Tier: Sovereign Enterprise</p>
+    <p>Valor: $75,000 USD</p>
+    <p>Estado: ACTIVE</p>
+    <a href="/license.pdf" class="btn">View License PDF</a>
   </section>
 
-  <section>
-    <h2>QFN Nodes</h2>
-    <button onclick="fetchQfnNodes()">Fetch QFN Nodes</button>
-    <pre id="qfn-nodes">Awaiting sovereign listing...</pre>
+  <!-- Architecture Section -->
+  <section class="architecture">
+    <h3>Arquitectura de 5 Capas</h3>
+    <ul>
+      <li>Authority Layer — streetemporioroyal.com</li>
+      <li>Protocol Layer — RSA-4096 · SHA-256</li>
+      <li>Cognitive Layer — Command Brain 27</li>
+      <li>Execution Layer — Quantum Loop</li>
+      <li>Persistence Layer — Fusion Registry</li>
+    </ul>
   </section>
 
-  <section>
-    <h2>Ping Node</h2>
-    <input type="text" id="nodeId" placeholder="Enter Node ID" />
-    <button onclick="pingNode(document.getElementById('nodeId').value)">Ping Node</button>
-    <pre id="ping-result">Awaiting ceremonial ping...</pre>
+  <!-- Pipelines Core -->
+  <section class="pipelines">
+    <h3>Command Brain 27 — Pipelines</h3>
+    <ol>
+      <li>Identity & License → Token HEISEN-MATRIX + PDF</li>
+      <li>API Key Issuance → fus_[64 hex]</li>
+      <li>Verification & Audit → VALID / REVOKED</li>
+      <li>Brain HQ Orchestration → Módulos 3D</li>
+      <li>Deployment & Registry → Registro en AHT-GATEWAY</li>
+    </ol>
   </section>
 
-  <section>
-    <h2>Command Console</h2>
-    <input type="text" id="commandInput" placeholder="Enter Command" />
-    <button onclick="executeCommand()">Execute Command</button>
-    <pre id="command-result">Awaiting sovereign execution...</pre>
+  <!-- API Endpoints -->
+  <section class="api">
+    <h3>Core Endpoints — AHT-GATEWAY API</h3>
+    <ul>
+      <li>POST /api/admin/keys/create — Emisión de API Keys</li>
+      <li>GET /api/keys/verify — Verificación de key</li>
+      <li>POST /api/licenses/issue — Emisión de licencia</li>
+      <li>GET /api/licenses/{tokenId} — Estado de licencia</li>
+      <li>GET /api/audit/logs — Registro de eventos</li>
+      <li>POST /api/brain/command — Ejecución de comando</li>
+    </ul>
   </section>
 
+  <!-- Footer Ceremonial -->
   <footer>
-    © 2026 SER27 LGORITMO • Sovereign Enterprise Ritual Blueprint
+    <div class="mini-seal">© Street Emporio Royal — Sovereign Enterprise License</div>
   </footer>
+
 </body>
+</html>
+
+
+    
