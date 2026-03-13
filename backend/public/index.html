@@ -1,46 +1,159 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AHT Sovereign Operations Hub</title>
-    <script>
-        async function fetchSystemStatus() {
-            const response = await fetch('/api/system-status');
-            const data = await response.json();
-            document.getElementById('system-status').innerText = JSON.stringify(data, null, 2);
-        }
+  <meta charset="UTF-8">
+  <title>AHT-GATEWAY • Sovereign Enterprise Core</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #0a0f29, #1c2a48);
+      color: #f5f5f5;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #0d1b3d;
+      padding: 3rem;
+      text-align: center;
+      border-bottom: 6px solid #ffd700;
+    }
+    header h1 {
+      font-size: 3rem;
+      margin: 0;
+      color: #ffd700;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+    }
+    header p {
+      font-size: 1.2rem;
+      color: #00c4ff;
+      margin-top: 0.5rem;
+    }
+    .hero {
+      text-align: center;
+      padding: 4rem 2rem;
+      background: linear-gradient(90deg, #1c2a48, #0a0f29);
+    }
+    .hero button {
+      background: #ffd700;
+      border: none;
+      padding: 1rem 2rem;
+      font-size: 1.2rem;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 8px;
+      margin-top: 2rem;
+    }
+    .hero button:hover {
+      background: #e6b800;
+    }
+    section {
+      padding: 2rem;
+      border-bottom: 1px solid #333;
+    }
+    h2 {
+      color: #00c4ff;
+      margin-bottom: 1rem;
+    }
+    button {
+      background: #ffd700;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      font-weight: bold;
+      cursor: pointer;
+      margin-bottom: 1rem;
+      border-radius: 6px;
+    }
+    button:hover {
+      background: #e6b800;
+    }
+    pre {
+      background: #111;
+      padding: 1rem;
+      border-radius: 6px;
+      color: #0f0;
+      font-size: 0.9rem;
+      overflow-x: auto;
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background: #0d1b3d;
+      color: #888;
+      font-size: 0.8rem;
+    }
+  </style>
+  <script>
+    async function fetchSystemStatus() {
+      const response = await fetch('/api/system-status');
+      const data = await response.json();
+      document.getElementById('system-status').innerText = JSON.stringify(data, null, 2);
+    }
 
-        async function fetchQfnNodes() {
-            const response = await fetch('/api/qfn-nodes');
-            const data = await response.json();
-            document.getElementById('qfn-nodes').innerText = JSON.stringify(data, null, 2);
-        }
+    async function fetchQfnNodes() {
+      const response = await fetch('/api/qfn-nodes');
+      const data = await response.json();
+      document.getElementById('qfn-nodes').innerText = JSON.stringify(data, null, 2);
+    }
 
-        async function pingNode(nodeId) {
-            const response = await fetch(`/api/ping/${nodeId}`);
-            const data = await response.json();
-            document.getElementById('ping-result').innerText = JSON.stringify(data, null, 2);
-        }
-    </script>
+    async function pingNode(nodeId) {
+      const response = await fetch(`/api/ping/${nodeId}`);
+      const data = await response.json();
+      document.getElementById('ping-result').innerText = JSON.stringify(data, null, 2);
+    }
+
+    async function executeCommand() {
+      const cmd = document.getElementById('commandInput').value;
+      const response = await fetch(`/api/command`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ command: cmd })
+      });
+      const data = await response.json();
+      document.getElementById('command-result').innerText = JSON.stringify(data, null, 2);
+    }
+  </script>
 </head>
 <body>
-    <h1>AHT Sovereign Operations Hub</h1>
-    <div>
-        <h2>System Status</h2>
-        <button onclick="fetchSystemStatus()">Fetch System Status</button>
-        <pre id="system-status"></pre>
-    </div>
-    <div>
-        <h2>QFN Nodes</h2>
-        <button onclick="fetchQfnNodes()">Fetch QFN Nodes</button>
-        <pre id="qfn-nodes"></pre>
-    </div>
-    <div>
-        <h2>Ping Node</h2>
-        <input type="text" id="nodeId" placeholder="Enter Node ID" />
-        <button onclick="pingNode(document.getElementById('nodeId').value)">Ping Node</button>
-        <pre id="ping-result"></pre>
-    </div>
+  <header>
+    <h1>👑 AHT-GATEWAY</h1>
+    <p>Supreme Hybrid • Sovereign Enterprise Orchestrator</p>
+  </header>
+
+  <div class="hero">
+    <h2>Welcome to the Presidential Core</h2>
+    <p>Enter the sovereign ecosystem and orchestrate every command.</p>
+    <button onclick="document.getElementById('ecosystem').scrollIntoView()">Enter Sovereign Hub</button>
+  </div>
+
+  <section id="ecosystem">
+    <h2>System Status</h2>
+    <button onclick="fetchSystemStatus()">Fetch System Status</button>
+    <pre id="system-status">Awaiting ceremonial activation...</pre>
+  </section>
+
+  <section>
+    <h2>QFN Nodes</h2>
+    <button onclick="fetchQfnNodes()">Fetch QFN Nodes</button>
+    <pre id="qfn-nodes">Awaiting sovereign listing...</pre>
+  </section>
+
+  <section>
+    <h2>Ping Node</h2>
+    <input type="text" id="nodeId" placeholder="Enter Node ID" />
+    <button onclick="pingNode(document.getElementById('nodeId').value)">Ping Node</button>
+    <pre id="ping-result">Awaiting ceremonial ping...</pre>
+  </section>
+
+  <section>
+    <h2>Command Console</h2>
+    <input type="text" id="commandInput" placeholder="Enter Command" />
+    <button onclick="executeCommand()">Execute Command</button>
+    <pre id="command-result">Awaiting sovereign execution...</pre>
+  </section>
+
+  <footer>
+    © 2026 SER27 LGORITMO • Sovereign Enterprise Ritual Blueprint
+  </footer>
 </body>
 </html>
