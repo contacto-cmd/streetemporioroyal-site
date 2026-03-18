@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Página no encontrada — 404</title>
+  <meta name="description" content="Lo sentimos — la página que buscas no se encontró. Vuelve al inicio o reporta el problema." />
+  <style>
+    :root{
+      --bg:#0f1724;
+      --card:#0b1220;
+      --accent:#7c5cff;
+      --muted:#9aa4b2;
+      --glass: rgba(255,255,255,0.03);
+      --radius:14px;
+      --maxw:980px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(124,92,255,0.12), transparent 8%),
+                  radial-gradient(900px 500px at 90% 90%, rgba(2,200,210,0.06), transparent 8%),
+                  var(--bg);
+      color:#e6eef8;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:32px;
+      gap:24px;
+      flex-direction:column;
+    }
+
+    .card{
+      width:100%;
+      max-width:var(--maxw);
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:var(--radius);
+      padding:28px;
+      box-shadow: 0 6px 30px rgba(2,6,23,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
+      display:flex;
+      gap:24px;
+      align-items:center;
+    }
+
+    .hero-left{flex:1; min-width:220px}
+    .hero-right{width:320px; display:flex; flex-direction:column; gap:14px; align-items:center}
+
+    .code{
+      font-weight:700;
+      font-size:68px;
+      line-height:1;
+      color:var(--accent);
+      letter-spacing:-2px;
+    }
+    .title{
+      font-size:22px;
+      margin-top:6px;
+      margin-bottom:6px;
+    }
+    .desc{color:var(--muted); font-size:15px; margin-bottom:12px}
+    .actions{display:flex; gap:12px; flex-wrap:wrap}
+
+    .btn{
+      appearance:none;
+      border:0;
+      cursor:pointer;
+      padding:11px 16px;
+      border-radius:10px;
+      font-weight:600;
+      color:#081225;
+      background:linear-gradient(90deg,var(--accent), #5b8bff);
+      box-shadow: 0 6px 18px rgba(124,92,255,0.12);
+      transition:transform .12s ease, box-shadow .12s ease;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+    }
+    .btn:hover{transform:translateY(-3px)}
+    .btn.secondary{
+      background:transparent;
+      color:var(--muted);
+      border:1px solid rgba(255,255,255,0.04);
+      box-shadow:none;
+    }
+
+    .report{
+      font-size:13px;
+      color:var(--muted);
+      text-align:center;
+      margin-top:6px;
+    }
+
+    /* small decorative panel */
+    .panel{
+      width:100%;
+      padding:14px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));
+      border-radius:12px;
+      display:flex;
+      gap:12px;
+      align-items:center;
+      justify-content:space-between;
+    }
+    .panel .meta{font-size:13px; color:var(--muted)}
+    .panel .status{font-weight:700; color:#bfe9ff; background: rgba(11,24,36,0.12); padding:6px 10px; border-radius:8px; font-size:12px}
+
+    /* responsivity */
+    @media (max-width:880px){
+      .card{flex-direction:column; align-items:flex-start}
+      .hero-right{width:100%}
+    }
+
+    /* small logo */
+    .logo{
+      width:56px;height:56px;border-radius:12px;background:linear-gradient(180deg,var(--accent), #5b8bff);
+      display:flex;align-items:center;justify-content:center;font-weight:800;color:#031029;font-size:20px;
+      box-shadow: 0 8px 28px rgba(92,64,255,0.12);
+    }
+  </style>
+</head>
+<body>
+  <main class="card" role="main" aria-labelledby="title">
+    <div class="hero-left">
+      <div style="display:flex;align-items:center;gap:14px">
+        <div class="logo">LP</div>
+        <div>
+          <div class="code">404</div>
+          <div id="title" class="title">Página no encontrada</div>
+        </div>
+      </div>
+
+      <p class="desc">
+        Lo sentimos — la ruta que buscas no existe o se ha movido. Si estabas buscando una página dentro de la aplicación, intenta volver al inicio y navegar desde allí.
+      </p>
+
+      <div class="actions" role="navigation" aria-label="acciones">
+        <a class="btn" id="goHome" href="/">Volver al inicio</a>
+        <button class="btn secondary" id="tryReload">Recargar / Reintentar</button>
+        <button class="btn secondary" id="reportBtn">Reportar problema</button>
+      </div>
+
+      <div class="report" id="reportMsg">¿Sigues viendo esto? Envía un informe para que lo revisemos.</div>
+
+      <div style="height:12px"></div>
+
+      <div class="panel" aria-hidden="false">
+        <div class="meta">Live status: <strong id="liveStatus">Conectando…</strong></div>
+        <div class="status" id="uptime">Premium</div>
+      </div>
+    </div>
+
+    <div class="hero-right" aria-hidden="true">
+      <!-- Placeholder illustration made with CSS -->
+      <div style="width:100%; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); padding:18px; border-radius:12px; display:flex;flex-direction:column;align-items:center; gap:12px">
+        <svg width="120" height="80" viewBox="0 0 120 80" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="6" y="8" width="108" height="64" rx="10" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.03)"/>
+          <rect x="18" y="22" width="84" height="12" rx="6" fill="rgba(124,92,255,0.12)"/>
+          <rect x="18" y="40" width="56" height="6" rx="3" fill="rgba(255,255,255,0.03)"/>
+          <rect x="18" y="50" width="28" height="6" rx="3" fill="rgba(255,255,255,0.03)"/>
+          <circle cx="94" cy="58" r="6" fill="rgba(91,139,255,0.14)"/>
+        </svg>
+        <div style="text-align:center">
+          <div style="font-weight:700">Interfaz en tiempo real</div>
+          <div style="color:var(--muted); font-size:13px">Estado premium y reporting integrado</div>
+        </div>
+      </div>
+
+      <div style="width:100%; text-align:center; margin-top:8px; color:var(--muted); font-size:13px">
+        Si tienes una cuenta premium, inicia sesión para ver opciones avanzadas.
+      </div>
+    </div>
+  </main>
+
+  <script>
+    (function(){
+      // Try to check "live" status quickly (basic)
+      var live = document.getElementById('liveStatus');
+      var uptime = document.getElementById('uptime');
+      // Fake check: if navigator.onLine available use it; otherwise mark offline
+      if (navigator.onLine) {
+        live.textContent = 'En línea';
+        uptime.textContent = 'Premium';
+      } else {
+        live.textContent = 'Sin conexión';
+        uptime.textContent = 'Offline';
+      }
+
+      // Button handlers
+      document.getElementById('tryReload').addEventListener('click', function(){
+        // Try reload the page; if this is a SPA route, try redirect to index.html
+        try {
+          location.reload();
+          setTimeout(function(){
+            // After reload fallback to index
+            location.href = '/';
+          }, 1200);
+        } catch(e){}
+      });
+
+      document.getElementById('reportBtn').addEventListener('click', function(){
+        var url = location.href;
+        var subject = encodeURIComponent('Error 404 en la web: ' + location.hostname);
+        var body = encodeURIComponent('Hola,\n\nHe encontrado un 404 en la ruta:\n' + url + '\n\nPor favor revisadlo.\n\n— Informe enviado desde 404.html');
+        // open mail client
+        window.location.href = 'mailto:soporte@tu-dominio.com?subject=' + subject + '&body=' + body;
+      });
+
+      // If the 404 was served but index.html exists (SPA), try to redirect silently to index.html after short delay
+      // This helps GitHub Pages SPA routing: if server delivered 404 for SPA route, we force load index.html
+      setTimeout(function(){
+        // Only redirect if current path isn't root and there's no hash (so as not to conflict)
+        var path = location.pathname || '/';
+        if (path.length > 1 && !location.hash) {
+          // Attempt to fetch root index to see if it exists (avoid redirect loops)
+          fetch('/', {method:'GET', headers:{'X-Requested-With':'XMLHttpRequest'}})
+            .then(function(resp){
+              if (resp && resp.status === 200) {
+                // Replace state to avoid adding history entry
+                history.replaceState(null, '', '/');
+                location.href = '/';
+              }
+            }).catch(function(){ /* ignore */ });
+        }
+      }, 900);
+
+      // Expose minor analytics: send a lightweight beacon to your endpoint (optional)
+      // Replace the URL below with your reporting endpoint if available.
+      (function sendBeacon(){
+        try {
+          var endpoint = '/.netlify/functions/404-report'; // <- optional, change or remove
+          if (navigator.sendBeacon) {
+            var data = new Blob([JSON.stringify({url: location.href, ts: Date.now(), ref: document.referrer})], {type:'application/json'});
+            navigator.sendBeacon(endpoint, data);
+          } else {
+            // graceful fallback
+            fetch(endpoint, {method:'POST', body: JSON.stringify({url: location.href, ts: Date.now(), ref: document.referrer}), headers:{'Content-Type':'application/json'}}).catch(()=>{});
+          }
+        } catch(e){}
+      })();
+    })();
+  </script>
+</body>
+</html>
