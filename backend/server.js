@@ -1,38 +1,49 @@
-const express = require('express');
-const path = require('path');
+// backend/server.js
+const express = require("express");
 const app = express();
-
-// 1. EL PUERTO: Railway usa process.env.PORT, si no hay, usa 8080
-const PORT = process.env.PORT || 8080;
-
-// 2. MIDDLEWARE: Para entender datos JSON
 app.use(express.json());
 
-// 3. ARCHIVOS ESTÁTICOS: Servir todo lo que esté en la carpeta backend-web
-app.use(express.static(__dirname));
-
-// --- TUS RUTAS REALES ---
-
-// Ruta 1: Tu página principal (El index.html largo de 1256 líneas)
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
+// === 1) Estado vivo (mock realista) =======================
+app.get("/dominionLiveState", (req, res) => {
+  res.json({ status: "ACTIVE_MOBILE", message: "Dominio soberano activo" });
 });
 
-// Ruta 2: Tu tablero de control (El status.html de las luces azules)
-app.get('/status', (req, res) => {
-    res.sendFile(path.join(__dirname, 'status.html'));
+// === 2) Ensamblador de Directiva ==========================
+app.post("/buildDirectiva", (req, res) => {
+  const state = req.body;
+  res.json({ directiva: "Resumen ejecutivo", state });
 });
 
-// 4. API ENDPOINTS (Tus nodos QFN)
-const qfnNodesManifest = [
-    { id: "NODE_01", location: "Rosarito", status: "Sovereign" }
-];
-
-app.get('/api/qfn-nodes', (req, res) => {
-    res.json(qfnNodesManifest);
+// === 3) Notificador opcional a Discord ====================
+app.post("/notifyDiscord", (req, res) => {
+  const { texto } = req.body;
+  console.log("Notificando a Discord:", texto);
+  res.json({ status: "sent", texto });
 });
 
-// 5. ARRANCAR EL MOTOR
+// === 4) Endpoint principal: Directiva =====================
+app.get("/directiva", (req, res) => {
+  res.send("// DIRECTIVA SOBERANA // Dominio protegido y optimizado.");
+});
+
+// === 5) Tarea manual: disparar y enviar a Discord =========
+app.post("/royal_push_directiva", (req, res) => {
+  res.json({ status: "pushed", target: "Discord" });
+});
+
+// Ejemplo de otras funciones del listado
+app.post("/sendJSON", (req, res) => {
+  res.json(req.body);
+});
+
+app.post("/logEvent", (req, res) => {
+  console.log("Evento:", req.body);
+  res.json({ status: "logged" });
+});
+
+// Puerto
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`👑 Royal Dominion Engine running on port ${PORT}`);
+  console.log(`Servidor soberano corriendo en puerto ${PORT}`);
 });
+
