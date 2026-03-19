@@ -1,4 +1,4 @@
-name: Royal-3D-Deploy 👑
+name: Enterprise-Royal-3D-Deploy 👑
 on: [push]
 jobs:
   build-and-sync:
@@ -13,5 +13,5 @@ jobs:
         run: npm install
         working-directory: ./backend/web
       - name: Verify Manifest
-        run: echo "Royal 3D Manifest Verified"
+        run: echo "Enterprise Royal 3D Manifest Verified"
 
