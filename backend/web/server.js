@@ -11,6 +11,9 @@ app.use(express.json());
 // 3. ARCHIVOS ESTÁTICOS: Servir todo lo que esté en la carpeta backend-web
 app.use(express.static(__dirname));
 
+// Serve node_modules for Speed Insights
+app.use('/node_modules', express.static(path.join(__dirname, 'node_modules')));
+
 // --- TUS RUTAS REALES ---
 
 // Ruta 1: Tu página principal (El index.html largo de 1256 líneas)
