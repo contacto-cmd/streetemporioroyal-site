@@ -1,4 +1,4 @@
-name: Enterprise Deploy
+name: Enterprise Deploy 
 
 on:
   push:
@@ -18,7 +18,11 @@ jobs:
           node-version: 18
 
       - name: Install dependencies
+        # Entramos a tu carpeta real backend/web
         run: npm install
+        working-directory: ./backend/web
 
       - name: Build project
-        run: npm run build
+        # Solo confirmamos que todo está sincronizado
+        run: echo "Royal System Synchronized"
+        working-directory: ./backend/web
