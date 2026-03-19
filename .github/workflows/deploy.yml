@@ -1,17 +1,53 @@
 name: Enterprise-Royal-3D-Deploy 👑
-on: [push]
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: # Allow manual trigger
+
 jobs:
-  build-and-sync:
+  build-and-deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - name: Setup Node
+      # 1. Checkout repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Setup Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '18'
+          cache: 'npm'
+
+      # 3. Install dependencies
       - name: Install dependencies
         run: npm install
         working-directory: ./backend/web
+
+      # 4. Run tests (optional but recommended)
+      - name: Run tests
+        run: npm test
+        working-directory: ./backend/web
+
+      # 5. Build project
+      - name: Build project
+        run: npm run build
+        working-directory: ./backend/web
+
+      # 6. Verify manifest (ceremonial step)
       - name: Verify Manifest
         run: echo "Enterprise Royal 3D Manifest Verified"
+
+      # 7. Deploy to Vercel
+      - name: Deploy to Vercel
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          working-directory: ./backend/web
+
 
