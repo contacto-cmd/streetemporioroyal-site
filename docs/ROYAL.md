@@ -6,7 +6,7 @@ Aquí no solo hay código: aquí late un **sistema viviente**.
 ---
 
 ## ⚡ Filosofía
-- 💎 Elegancia pero maliante.  
+- 💎 Elegante pero maleante. 
 - ☠️ Poder digital disfrazado de líneas de código.  
 - 🔥 Cada commit es una jugada de ajedrez en el tablero mundial.  
 
