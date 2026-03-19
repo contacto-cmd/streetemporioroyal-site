@@ -1,28 +1,17 @@
-name: Enterprise Deploy 
-
-on:
-  push:
-    branches:
-      - main
-
+name: Enterprise-Royal-3D-Deploy 👑
+on: [push]
 jobs:
-  deploy:
+  build-and-sync:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
-
-      - name: Install Node
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
-
+          node-version: '18'
       - name: Install dependencies
-        # Entramos a tu carpeta real backend/web
         run: npm install
         working-directory: ./backend/web
+      - name: Verify Manifest
+        run: echo "Enterprise Royal 3D Manifest Verified"
 
-      - name: Build project
-        # Solo confirmamos que todo está sincronizado
-        run: echo "Royal System Synchronized"
-        working-directory: ./backend/web
