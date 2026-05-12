@@ -1,0 +1,32 @@
+{
+  "name": "street-emporio-royal-site",
+  "version": "1.0.0",
+  "description": "STREET EMPORIO ROYAL · AHT-GATEWAY · SOVEREIGN ENTERPRISE",
+  "main": "backend/web/index.html",
+  "scripts": {
+    "dev": "http-server backend/web -p 8000 -c-1",
+    "start": "http-server backend/web -p 3000",
+    "build": "echo 'Static site - no build needed'",
+    "serve": "python3 -m http.server 8000 --directory backend/web"
+  },
+  "keywords": [
+    "sovereign",
+    "enterprise",
+    "gateway",
+    "digital",
+    "crypto"
+  ],
+  "author": "contacto-cmd",
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/contacto-cmd/streetemporioroyal-site.git"
+  },
+  "bugs": {
+    "url": "https://github.com/contacto-cmd/streetemporioroyal-site/issues"
+  },
+  "homepage": "https://github.com/contacto-cmd/streetemporioroyal-site#readme"
+}
