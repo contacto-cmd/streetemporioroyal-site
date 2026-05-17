@@ -1,0 +1,1256 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>STREET EMPORIO ROYAL · AHT-GATEWAY · SOVEREIGN ENTERPRISE</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Cinzel:wght@400;600;700;900&family=Share+Tech+Mono&family=Exo+2:ital,wght@0,100;0,300;0,400;0,700;0,900;1,300&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --teal:#00F5FF;
+  --teal2:#00C9D4;
+  --gold:#D4AF37;
+  --gold2:#F4D03F;
+  --void:#020409;
+  --deep:#050810;
+  --card:#080d1a;
+  --border:rgba(0,245,255,0.12);
+  --text:#c8d8e8;
+  --dim:#5a7a8a;
+  --green:#00ff88;
+  --red:#ff3366;
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Exo 2',sans-serif;
+  background:var(--void);
+  color:var(--text);
+  overflow-x:hidden;
+  cursor:none;
+}
+
+/* ─── CURSOR ─── */
+.cur{position:fixed;width:8px;height:8px;background:var(–teal);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .1s;mix-blend-mode:screen}
+.cur2{position:fixed;width:32px;height:32px;border:1px solid rgba(0,245,255,.4);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:all .3s ease}
+
+/* ─── CANVAS LAYER ─── */
+#cosmos{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
+
+/* ─── NAV ─── */
+nav{
+position:fixed;top:0;left:0;right:0;z-index:200;
+padding:18px 48px;
+display:flex;align-items:center;justify-content:space-between;
+background:rgba(2,4,9,0.85);
+backdrop-filter:blur(20px);
+border-bottom:1px solid var(–border);
+}
+.nav-brand{
+font-family:‘Cinzel’,serif;
+font-size:.9rem;
+font-weight:700;
+letter-spacing:.2em;
+color:var(–gold);
+text-shadow:0 0 20px rgba(212,175,55,.5);
+}
+.nav-links{display:flex;gap:32px;list-style:none}
+.nav-links a{
+font-family:‘Share Tech Mono’,monospace;
+font-size:.7rem;color:var(–dim);
+text-decoration:none;
+letter-spacing:.1em;
+text-transform:uppercase;
+transition:color .2s;
+}
+.nav-links a:hover{color:var(–teal)}
+.nav-badge{
+font-family:‘Share Tech Mono’,monospace;
+font-size:.65rem;
+padding:6px 14px;
+border:1px solid var(–teal);
+color:var(–teal);
+letter-spacing:.15em;
+text-transform:uppercase;
+position:relative;
+overflow:hidden;
+cursor:none;
+transition:all .3s;
+}
+.nav-badge::before{
+content:’’;position:absolute;inset:0;
+background:var(–teal);transform:scaleX(0);
+transform-origin:left;transition:transform .3s;z-index:-1;
+}
+.nav-badge:hover{color:var(–void)}
+.nav-badge:hover::before{transform:scaleX(1)}
+
+/* ─── HERO ─── */
+.hero{
+position:relative;z-index:10;
+min-height:100vh;
+display:flex;flex-direction:column;
+justify-content:center;align-items:center;
+text-align:center;
+padding:120px 48px 80px;
+overflow:hidden;
+}
+.chess-grid{
+position:absolute;inset:0;
+background-image:
+linear-gradient(rgba(0,245,255,.04) 1px,transparent 1px),
+linear-gradient(90deg,rgba(0,245,255,.04) 1px,transparent 1px);
+background-size:60px 60px;
+animation:gridDrift 20s linear infinite;
+}
+@keyframes gridDrift{from{transform:translateY(0)}to{transform:translateY(60px)}}
+
+.hex-pattern{
+position:absolute;inset:0;opacity:.04;
+background-image:url(“data:image/svg+xml,%3Csvg xmlns=‘http://www.w3.org/2000/svg’ width=‘80’ height=‘92’%3E%3Cpath d=‘M40 0 L80 23 L80 69 L40 92 L0 69 L0 23 Z’ fill=‘none’ stroke=’%2300F5FF’ stroke-width=‘0.5’/%3E%3C/svg%3E”);
+}
+
+.hero-seal{
+width:120px;height:120px;
+border:2px solid var(–gold);
+border-radius:50%;
+display:flex;align-items:center;justify-content:center;
+margin:0 auto 40px;
+position:relative;
+animation:sealPulse 4s ease-in-out infinite;
+}
+.hero-seal::before{
+content:’’;
+position:absolute;inset:-8px;
+border:1px solid rgba(212,175,55,.3);
+border-radius:50%;
+animation:sealRotate 12s linear infinite;
+border-top-color:var(–gold);
+}
+.hero-seal::after{
+content:’’;
+position:absolute;inset:-16px;
+border:1px solid rgba(0,245,255,.15);
+border-radius:50%;
+animation:sealRotate 20s linear infinite reverse;
+border-right-color:var(–teal);
+}
+@keyframes sealPulse{0%,100%{box-shadow:0 0 20px rgba(212,175,55,.3)}50%{box-shadow:0 0 60px rgba(212,175,55,.6),0 0 100px rgba(0,245,255,.2)}}
+@keyframes sealRotate{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+
+.seal-eye{
+font-size:2.5rem;
+filter:drop-shadow(0 0 10px var(–gold));
+}
+
+.hero-kicker{
+font-family:‘Share Tech Mono’,monospace;
+font-size:.7rem;letter-spacing:.3em;
+color:var(–teal);text-transform:uppercase;
+margin-bottom:20px;
+animation:fadeUp .8s ease both;
+}
+h1{
+font-family:‘Cinzel’,serif;
+font-size:clamp(2.5rem,6vw,6rem);
+font-weight:900;
+line-height:.95;
+letter-spacing:-.02em;
+margin-bottom:16px;
+animation:fadeUp .8s .1s ease both;
+}
+h1 .gold{color:var(–gold);text-shadow:0 0 30px rgba(212,175,55,.5)}
+h1 .teal{color:var(–teal);text-shadow:0 0 30px rgba(0,245,255,.5)}
+
+.license-id{
+font-family:‘Share Tech Mono’,monospace;
+font-size:1rem;
+color:var(–gold);
+letter-spacing:.25em;
+border:1px solid rgba(212,175,55,.3);
+padding:8px 24px;
+margin:0 auto 32px;
+width:fit-content;
+position:relative;
+animation:fadeUp .8s .2s ease both;
+}
+.license-id::before,.license-id::after{
+content:’’;position:absolute;
+width:8px;height:8px;
+border:1px solid var(–gold);
+}
+.license-id::before{top:-4px;left:-4px;border-right:none;border-bottom:none}
+.license-id::after{bottom:-4px;right:-4px;border-left:none;border-top:none}
+
+.hero-sub{
+font-family:‘Rajdhani’,sans-serif;
+font-size:1.1rem;font-weight:300;
+color:var(–dim);max-width:600px;
+line-height:1.7;margin:0 auto 48px;
+animation:fadeUp .8s .3s ease both;
+}
+
+.hero-actions{
+display:flex;gap:20px;justify-content:center;flex-wrap:wrap;
+animation:fadeUp .8s .4s ease both;
+}
+.btn-elite{
+font-family:‘Cinzel’,serif;
+font-size:.75rem;font-weight:700;
+letter-spacing:.2em;text-transform:uppercase;
+padding:14px 32px;
+background:linear-gradient(135deg,var(–gold),var(–gold2));
+color:var(–void);
+border:none;cursor:none;
+position:relative;overflow:hidden;
+clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);
+transition:all .3s;text-decoration:none;display:inline-block;
+}
+.btn-elite:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(212,175,55,.4)}
+.btn-ghost{
+font-family:‘Share Tech Mono’,monospace;
+font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;
+padding:14px 32px;
+border:1px solid var(–teal);
+color:var(–teal);background:transparent;
+cursor:none;transition:all .3s;text-decoration:none;display:inline-block;
+}
+.btn-ghost:hover{background:rgba(0,245,255,.08);box-shadow:0 0 20px rgba(0,245,255,.2)}
+
+.hero-metrics{
+display:flex;gap:60px;
+margin-top:80px;
+padding-top:40px;
+border-top:1px solid var(–border);
+animation:fadeUp .8s .5s ease both;
+}
+.metric-num{
+font-family:‘Cinzel’,serif;
+font-size:2rem;font-weight:700;
+color:var(–teal);
+text-shadow:0 0 20px rgba(0,245,255,.4);
+}
+.metric-label{
+font-family:‘Share Tech Mono’,monospace;
+font-size:.6rem;color:var(–dim);
+letter-spacing:.1em;text-transform:uppercase;
+margin-top:4px;
+}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+
+/* ─── SECTION BASE ─── */
+.section{
+position:relative;z-index:10;
+padding:120px 60px;
+}
+.section-kicker{
+font-family:‘Share Tech Mono’,monospace;
+font-size:.65rem;letter-spacing:.3em;
+color:var(–teal);text-transform:uppercase;
+margin-bottom:12px;
+display:flex;align-items:center;gap:12px;
+}
+.section-kicker::before{
+content:’’;width:30px;height:1px;background:var(–teal);
+}
+h2{
+font-family:‘Cinzel’,serif;
+font-size:clamp(1.8rem,3.5vw,3rem);
+font-weight:700;line-height:1;
+letter-spacing:-.02em;
+margin-bottom:16px;
+}
+h2 .g{color:var(–gold)}
+h2 .t{color:var(–teal)}
+.section-desc{
+color:var(–dim);font-family:‘Rajdhani’,sans-serif;
+font-size:1rem;font-weight:300;line-height:1.7;
+max-width:560px;margin-bottom:64px;
+}
+
+/* ─── TOKENS ─── */
+.tokens-section{background:var(–deep);border-top:1px solid var(–border);border-bottom:1px solid var(–border)}
+.tokens-grid{
+display:grid;
+grid-template-columns:repeat(5,1fr);
+gap:16px;
+}
+.token-card{
+border:1px solid rgba(0,245,255,.15);
+border-radius:2px;
+padding:28px 20px;
+position:relative;
+overflow:hidden;
+transition:all .4s;
+background:linear-gradient(160deg,rgba(0,245,255,.03),transparent);
+}
+.token-card::before{
+content:’’;position:absolute;top:0;left:0;right:0;height:1px;
+background:linear-gradient(90deg,transparent,var(–teal),transparent);
+opacity:0;transition:opacity .3s;
+}
+.token-card:hover{
+border-color:var(–teal);
+transform:translateY(-8px);
+box-shadow:0 20px 60px rgba(0,245,255,.15);
+}
+.token-card:hover::before{opacity:1}
+.token-card.reserved{
+border-color:rgba(212,175,55,.3);
+background:linear-gradient(160deg,rgba(212,175,55,.05),transparent);
+}
+.token-card.reserved::before{background:linear-gradient(90deg,transparent,var(–gold),transparent)}
+.token-card.reserved:hover{border-color:var(–gold);box-shadow:0 20px 60px rgba(212,175,55,.15)}
+
+.token-tier{
+font-family:‘Share Tech Mono’,monospace;
+font-size:.6rem;letter-spacing:.15em;
+color:var(–dim);text-transform:uppercase;
+margin-bottom:8px;
+}
+.token-id{
+font-family:‘Cinzel’,serif;
+font-size:.85rem;font-weight:700;
+color:var(–teal);margin-bottom:4px;
+word-break:break-word;
+}
+.token-card.reserved .token-id{color:var(–gold)}
+.token-value{
+font-family:‘Rajdhani’,sans-serif;
+font-size:1.6rem;font-weight:700;
+color:var(–text);margin:16px 0 8px;
+}
+.token-fn{
+font-family:‘Share Tech Mono’,monospace;
+font-size:.65rem;color:var(–dim);
+line-height:1.5;
+}
+.token-status{
+display:inline-flex;align-items:center;gap:6px;
+margin-top:16px;
+font-family:‘Share Tech Mono’,monospace;
+font-size:.6rem;letter-spacing:.1em;
+color:var(–green);
+}
+.token-status.reserved{color:var(–gold)}
+.token-dot{width:5px;height:5px;border-radius:50%;background:currentColor;animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+.token-mol{
+position:absolute;right:12px;top:12px;
+font-size:1.4rem;opacity:.15;
+}
+
+/* ─── PRICING ─── */
+.pricing-section{background:var(–void)}
+.pricing-grid{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:20px;
+}
+.price-card{
+border:1px solid var(–border);
+padding:36px 28px;
+position:relative;
+display:flex;flex-direction:column;
+transition:all .4s;
+background:var(–card);
+overflow:hidden;
+}
+.price-card::after{
+content:’’;position:absolute;bottom:0;left:0;right:0;height:2px;
+background:linear-gradient(90deg,transparent,var(–teal),transparent);
+transform:scaleX(0);transition:transform .4s;
+}
+.price-card:hover::after{transform:scaleX(1)}
+.price-card:hover{
+border-color:rgba(0,245,255,.3);
+transform:translateY(-4px);
+}
+.price-card.hero-plan{
+border-color:var(–gold);
+background:linear-gradient(160deg,rgba(212,175,55,.08),var(–card));
+}
+.price-card.hero-plan::after{background:linear-gradient(90deg,transparent,var(–gold),transparent)}
+.price-card.hero-plan:hover{border-color:var(–gold);box-shadow:0 20px 60px rgba(212,175,55,.15)}
+
+.plan-tag{
+font-family:‘Share Tech Mono’,monospace;
+font-size:.6rem;letter-spacing:.2em;
+color:var(–dim);text-transform:uppercase;margin-bottom:8px;
+}
+.plan-name{
+font-family:‘Cinzel’,serif;
+font-size:1rem;font-weight:700;
+color:var(–text);margin-bottom:8px;
+}
+.plan-price{
+font-family:‘Rajdhani’,sans-serif;
+font-size:2.8rem;font-weight:700;
+line-height:1;
+color:var(–teal);margin:24px 0 4px;
+}
+.price-card.hero-plan .plan-price{color:var(–gold)}
+.plan-period{font-family:‘Share Tech Mono’,monospace;font-size:.6rem;color:var(–dim)}
+.plan-features{
+flex:1;list-style:none;
+margin:24px 0;
+display:flex;flex-direction:column;gap:10px;
+}
+.plan-features li{
+font-family:‘Rajdhani’,sans-serif;
+font-size:.9rem;color:rgba(200,216,232,.7);
+display:flex;align-items:flex-start;gap:8px;line-height:1.4;
+}
+.plan-features li::before{
+content:‘◆’;color:var(–teal);font-size:.5rem;margin-top:5px;flex-shrink:0;
+}
+.price-card.hero-plan .plan-features li::before{color:var(–gold)}
+.btn-plan{
+display:block;text-align:center;
+font-family:‘Share Tech Mono’,monospace;
+font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;
+padding:12px;border:1px solid rgba(0,245,255,.3);
+color:var(–teal);background:transparent;
+text-decoration:none;transition:all .3s;cursor:none;
+margin-top:auto;
+}
+.price-card.hero-plan .btn-plan{
+border-color:var(–gold);color:var(–gold);
+}
+.btn-plan:hover{background:rgba(0,245,255,.08)}
+.price-card.hero-plan .btn-plan:hover{background:rgba(212,175,55,.1)}
+
+/* ─── PIPELINE ─── */
+.pipeline-section{
+background:var(–deep);
+border-top:1px solid var(–border);
+}
+.pipeline-flow{
+display:grid;
+grid-template-columns:repeat(5,1fr);
+gap:0;
+margin-top:64px;
+position:relative;
+}
+.pipeline-flow::before{
+content:’’;
+position:absolute;top:50%;left:0;right:0;
+height:1px;background:linear-gradient(90deg,var(–teal),var(–gold));
+opacity:.3;transform:translateY(-50%);
+}
+.pipe-step{
+display:flex;flex-direction:column;align-items:center;
+padding:40px 20px;
+position:relative;
+z-index:2;
+}
+.pipe-node{
+width:64px;height:64px;
+border:2px solid var(–teal);
+border-radius:50%;
+display:flex;align-items:center;justify-content:center;
+margin-bottom:20px;
+font-size:1.4rem;
+background:var(–deep);
+position:relative;
+transition:all .4s;
+}
+.pipe-node:hover{
+background:rgba(0,245,255,.08);
+box-shadow:0 0 30px rgba(0,245,255,.3);
+}
+.pipe-node::before{
+content:attr(data-n);
+position:absolute;top:-8px;right:-8px;
+width:18px;height:18px;
+background:var(–teal);
+border-radius:50%;
+font-family:‘Share Tech Mono’,monospace;
+font-size:.55rem;color:var(–void);
+display:flex;align-items:center;justify-content:center;
+font-weight:700;
+}
+.pipe-name{
+font-family:‘Cinzel’,serif;
+font-size:.75rem;font-weight:700;
+letter-spacing:.1em;text-transform:uppercase;
+color:var(–teal);margin-bottom:6px;text-align:center;
+}
+.pipe-status{
+font-family:‘Share Tech Mono’,monospace;
+font-size:.6rem;color:var(–green);text-align:center;
+}
+
+/* ─── API ─── */
+.api-section{background:var(–void)}
+.api-grid{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:2px;
+margin-top:64px;
+background:var(–border);
+border:1px solid var(–border);
+}
+.api-card{
+background:var(–deep);
+padding:24px 20px;
+transition:background .2s;
+position:relative;
+}
+.api-card:hover{background:rgba(0,245,255,.04)}
+.api-method{
+font-family:‘Share Tech Mono’,monospace;
+font-size:.55rem;font-weight:700;
+padding:3px 8px;
+border-radius:2px;
+display:inline-block;margin-bottom:10px;
+}
+.api-method.get{background:rgba(0,255,136,.15);color:var(–green);border:1px solid var(–green)}
+.api-method.post{background:rgba(0,245,255,.15);color:var(–teal);border:1px solid var(–teal)}
+.api-path{
+font-family:‘Share Tech Mono’,monospace;
+font-size:.7rem;color:var(–text);margin-bottom:8px;
+}
+.api-desc{font-family:‘Rajdhani’,sans-serif;font-size:.85rem;color:var(–dim);line-height:1.4}
+
+/* ─── TERMINAL ─── */
+.terminal-section{background:var(–deep);border-top:1px solid var(–border)}
+.terminal{
+background:#010408;
+border:1px solid rgba(0,245,255,.2);
+border-radius:4px;
+margin-top:48px;
+overflow:hidden;
+box-shadow:0 0 60px rgba(0,245,255,.1);
+}
+.terminal-bar{
+background:#0a0f1a;
+padding:12px 20px;
+display:flex;align-items:center;gap:8px;
+border-bottom:1px solid rgba(0,245,255,.1);
+}
+.t-dot{width:10px;height:10px;border-radius:50%}
+.t-dot.r{background:#ff3b30}
+.t-dot.y{background:#febc2e}
+.t-dot.g{background:#28c840}
+.terminal-title{
+font-family:‘Share Tech Mono’,monospace;
+font-size:.65rem;color:var(–dim);
+margin-left:12px;letter-spacing:.1em;
+}
+.terminal-body{padding:24px 32px;min-height:300px}
+.terminal-body pre{
+font-family:‘Share Tech Mono’,monospace;
+font-size:.8rem;line-height:2;
+color:var(–teal);
+}
+.t-comment{color:#3a5a6a}
+.t-key{color:var(–gold)}
+.t-val{color:#a8ff78}
+.t-str{color:var(–teal)}
+.t-num{color:#ff9f43}
+.t-prompt{color:var(–dim)}
+.t-cursor{display:inline-block;width:8px;height:14px;background:var(–teal);animation:blink 1s step-end infinite;vertical-align:middle}
+
+/* ─── CHEMISTRY ─── */
+.molecule{
+position:absolute;pointer-events:none;
+}
+.atom{
+width:8px;height:8px;
+border-radius:50%;
+background:rgba(0,245,255,.3);
+position:absolute;
+}
+.bond{
+position:absolute;
+height:1px;
+background:rgba(0,245,255,.15);
+transform-origin:left center;
+}
+
+/* ─── CERT ─── */
+.cert-section{
+background:radial-gradient(ellipse at center, rgba(212,175,55,.05) 0%, var(–void) 70%);
+border-top:1px solid var(–border);
+text-align:center;
+padding:120px 60px;
+}
+.cert-box{
+max-width:600px;margin:60px auto 0;
+border:1px solid rgba(212,175,55,.4);
+padding:60px;
+position:relative;
+background:rgba(212,175,55,.03);
+}
+.cert-box::before,.cert-box::after{
+content:’’;position:absolute;
+width:24px;height:24px;border-color:var(–gold);border-style:solid;
+}
+.cert-box::before{top:-2px;left:-2px;border-width:2px 0 0 2px}
+.cert-box::after{bottom:-2px;right:-2px;border-width:0 2px 2px 0}
+.cert-inner::before,.cert-inner::after{
+content:’’;position:absolute;
+width:24px;height:24px;border-color:var(–gold);border-style:solid;
+}
+.cert-inner{position:relative}
+.cert-inner::before{top:-48px;right:-2px;border-width:2px 2px 0 0}
+.cert-inner::after{bottom:-48px;left:-2px;border-width:0 0 2px 2px}
+.cert-title{
+font-family:‘Cinzel’,serif;
+font-size:.7rem;letter-spacing:.3em;
+color:var(–gold);text-transform:uppercase;
+margin-bottom:32px;
+}
+.cert-owner{
+font-family:‘Cinzel’,serif;
+font-size:1.8rem;font-weight:700;
+color:var(–text);margin-bottom:8px;
+}
+.cert-rfc{
+font-family:‘Share Tech Mono’,monospace;
+font-size:.7rem;color:var(–dim);letter-spacing:.2em;
+margin-bottom:24px;
+}
+.cert-badge{
+display:inline-block;
+font-family:‘Share Tech Mono’,monospace;
+font-size:.65rem;letter-spacing:.25em;
+padding:8px 20px;
+border:1px solid var(–gold);
+color:var(–gold);
+margin-bottom:24px;
+}
+.cert-hash{
+font-family:‘Share Tech Mono’,monospace;
+font-size:.55rem;color:var(–dim);
+word-break:break-all;line-height:1.6;
+padding:12px;
+background:rgba(0,245,255,.03);
+border:1px solid var(–border);
+margin-top:24px;
+}
+
+/* ─── CTA ─── */
+.cta-section{
+background:var(–deep);
+border-top:1px solid var(–border);
+padding:140px 60px;
+text-align:center;
+position:relative;
+overflow:hidden;
+}
+.cta-glow{
+position:absolute;
+width:800px;height:400px;
+background:radial-gradient(ellipse,rgba(0,245,255,.06),transparent 70%);
+bottom:-200px;left:50%;transform:translateX(-50%);
+pointer-events:none;
+}
+
+/* ─── FOOTER ─── */
+footer{
+padding:40px 60px;
+border-top:1px solid var(–border);
+display:flex;justify-content:space-between;align-items:center;
+background:var(–void);
+z-index:10;position:relative;
+}
+.footer-brand{
+font-family:‘Cinzel’,serif;
+font-size:.75rem;font-weight:700;
+letter-spacing:.2em;color:var(–gold);
+}
+.footer-links{display:flex;gap:24px}
+.footer-links a{
+font-family:‘Share Tech Mono’,monospace;
+font-size:.6rem;color:var(–dim);
+text-decoration:none;letter-spacing:.1em;
+text-transform:uppercase;transition:color .2s;
+}
+.footer-links a:hover{color:var(–teal)}
+.footer-hash{
+font-family:‘Share Tech Mono’,monospace;
+font-size:.55rem;color:var(–dim);letter-spacing:.05em;
+}
+
+/* ─── REVEAL ─── */
+.reveal{opacity:0;transform:translateY(40px);transition:opacity .8s ease,transform .8s ease}
+.reveal.v{opacity:1;transform:none}
+
+/* ─── SCROLLBAR ─── */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(–void)}
+::-webkit-scrollbar-thumb{background:var(–teal);border-radius:2px}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:1100px){
+.tokens-grid,.pricing-grid{grid-template-columns:repeat(2,1fr)}
+.pipeline-flow{grid-template-columns:1fr;gap:20px}
+.pipeline-flow::before{display:none}
+.api-grid{grid-template-columns:repeat(2,1fr)}
+nav{padding:18px 24px}
+.section{padding:80px 24px}
+.hero-metrics{gap:32px;flex-wrap:wrap;justify-content:center}
+}
+@media(max-width:700px){
+.tokens-grid,.pricing-grid,.api-grid{grid-template-columns:1fr}
+.nav-links{display:none}
+h1{font-size:2.5rem}
+}
+</style>
+
+</head>
+<body>
+
+<canvas id="cosmos"></canvas>
+
+<div class="cur" id="cur"></div>
+<div class="cur2" id="cur2"></div>
+
+<!-- NAV -->
+
+<nav>
+  <div class="nav-brand">STREET EMPORIO ROYAL · AHT-GATEWAY</div>
+  <ul class="nav-links">
+    <li><a href="#tokens">Tokens</a></li>
+    <li><a href="#pricing">Planes</a></li>
+    <li><a href="#pipeline">Pipeline</a></li>
+    <li><a href="#api">API</a></li>
+    <li><a href="#cert">Certificado</a></li>
+  </ul>
+  <a href="#pricing" class="nav-badge">Sovereign Suite →</a>
+</nav>
+
+<!-- HERO -->
+
+<section class="hero">
+  <div class="chess-grid"></div>
+  <div class="hex-pattern"></div>
+
+  <div class="hero-seal">
+    <div class="seal-eye">◈</div>
+  </div>
+
+  <div class="hero-kicker">⚡ COMANDO 27 ACTIVE · HEISEN-MATRIX-05 · SOVEREIGN ENTERPRISE</div>
+  <h1>
+    <span class="gold">SOVEREIGN</span><br/>
+    <span class="teal">DIGITAL</span><br/>
+    POWER
+  </h1>
+
+  <div class="license-id">HEISEN-MATRIX-05 · $75,000 USD · ACTIVE</div>
+
+  <p class="hero-sub">
+    Infraestructura enterprise soberana. Identidad criptográfica. Licencias cuánticas.
+    Command Brain 27. Powered by AHT LGORITMO SUPERCHARGE.
+  </p>
+
+  <div class="hero-actions">
+    <a href="#pricing" class="btn-elite">Get Sovereign Suite</a>
+    <a href="#api" class="btn-ghost">API Documentation →</a>
+  </div>
+
+  <div class="hero-metrics">
+    <div>
+      <div class="metric-num">RSA‑4096</div>
+      <div class="metric-label">Cryptographic Engine</div>
+    </div>
+    <div>
+      <div class="metric-num">$175K</div>
+      <div class="metric-label">Portfolio Value</div>
+    </div>
+    <div>
+      <div class="metric-num">5</div>
+      <div class="metric-label">Fusion Tokens</div>
+    </div>
+    <div>
+      <div class="metric-num">∞</div>
+      <div class="metric-label">Sovereign Authority</div>
+    </div>
+  </div>
+</section>
+
+<!-- FUSION TOKENS -->
+
+<section class="section tokens-section" id="tokens">
+  <div class="section-kicker">Fusion Token Suite</div>
+  <h2>Assets <span class="t">Soberanos</span></h2>
+  <p class="section-desc">Tokens de infraestructura enterprise — cada uno con función, tier y valor definido en el registro soberano.</p>
+
+  <div class="tokens-grid reveal">
+    <div class="token-card">
+      <div class="token-mol">⬡</div>
+      <div class="token-tier">SOVEREIGN ENTERPRISE</div>
+      <div class="token-id">HEISEN-MATRIX-05</div>
+      <div class="token-value">$75,000</div>
+      <div class="token-fn">Premium sovereign infrastructure license. Quantum Domain Node.</div>
+      <div class="token-status"><span class="token-dot"></span>ACTIVE</div>
+    </div>
+    <div class="token-card">
+      <div class="token-mol">⬢</div>
+      <div class="token-tier">TIER 2</div>
+      <div class="token-id">QUANTUM-LOOP-06</div>
+      <div class="token-value">$40,000</div>
+      <div class="token-fn">Advanced execution token. quantum-loop.fusion-throne.com</div>
+      <div class="token-status"><span class="token-dot"></span>ACTIVE</div>
+    </div>
+    <div class="token-card">
+      <div class="token-mol">◈</div>
+      <div class="token-tier">TIER 1</div>
+      <div class="token-id">AETHER-TORUS-01</div>
+      <div class="token-value">$25,000</div>
+      <div class="token-fn">Architecture, design and generation token. Design layer.</div>
+      <div class="token-status"><span class="token-dot"></span>ACTIVE</div>
+    </div>
+    <div class="token-card">
+      <div class="token-mol">⊛</div>
+      <div class="token-tier">TIER 2</div>
+      <div class="token-id">ENTROPY-BRAID-03</div>
+      <div class="token-value">$35,000</div>
+      <div class="token-fn">Analytics, reporting and audit token. Governance layer.</div>
+      <div class="token-status"><span class="token-dot"></span>ACTIVE</div>
+    </div>
+    <div class="token-card reserved">
+      <div class="token-mol">♛</div>
+      <div class="token-tier">SOVEREIGN ROOT</div>
+      <div class="token-id">FUSION-CORE-00</div>
+      <div class="token-value">—</div>
+      <div class="token-fn">Core engine of the FUSION ecosystem. Not for sale. Owner only.</div>
+      <div class="token-status reserved"><span class="token-dot"></span>RESERVED · OWNER ONLY</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+
+<section class="section pricing-section" id="pricing">
+  <div class="section-kicker">Sovereign Tiers</div>
+  <h2>Elige tu <span class="g">Nivel</span></h2>
+  <p class="section-desc">Desde fundaciones soberanas hasta acceso ultra-elite con poder de ejecución cuántica completa.</p>
+
+  <div class="pricing-grid reveal">
+    <div class="price-card">
+      <div class="plan-tag">TIER I</div>
+      <div class="plan-name">Sovereign Starter</div>
+      <div class="plan-price">$1,500</div>
+      <div class="plan-period">pago único</div>
+      <ul class="plan-features">
+        <li>Sovereign Identity Foundation</li>
+        <li>Enterprise License Certificate</li>
+        <li>AHT-GATEWAY Access</li>
+        <li>SHA-256 Cryptographic Verification</li>
+        <li>Basic Governance Framework</li>
+      </ul>
+      <a href="#cert" class="btn-plan">Activate Starter →</a>
+    </div>
+    <div class="price-card hero-plan">
+      <div class="plan-tag">TIER II · POPULAR</div>
+      <div class="plan-name">Sovereign Professional</div>
+      <div class="plan-price">$4,500</div>
+      <div class="plan-period">pago único</div>
+      <ul class="plan-features">
+        <li>All Starter features</li>
+        <li>Advanced Enterprise Structure</li>
+        <li>Operational Manual</li>
+        <li>Full Governance Framework</li>
+        <li>Fusion Token Suite (2 tokens)</li>
+        <li>Fully Documented Autonomy</li>
+      </ul>
+      <a href="#cert" class="btn-plan">Activate Professional →</a>
+    </div>
+    <div class="price-card">
+      <div class="plan-tag">TIER III</div>
+      <div class="plan-name">Sovereign Enterprise</div>
+      <div class="plan-price">$12,500</div>
+      <div class="plan-period">pago único</div>
+      <ul class="plan-features">
+        <li>All Professional features</li>
+        <li>Enterprise Governance Suite</li>
+        <li>Fusion Token Suite (4 tokens)</li>
+        <li>Inter-enterprise agreements</li>
+        <li>RSA-4096 Signing Rights</li>
+        <li>Command Brain 27 Access</li>
+      </ul>
+      <a href="#cert" class="btn-plan">Activate Enterprise →</a>
+    </div>
+    <div class="price-card">
+      <div class="plan-tag">TIER IV · ELITE</div>
+      <div class="plan-name">Sovereign Ultra-Elite</div>
+      <div class="plan-price">$25,000</div>
+      <div class="plan-period">pago único</div>
+      <ul class="plan-features">
+        <li>All Enterprise features</li>
+        <li>Quantum-Layer Power Execution</li>
+        <li>All 5 Fusion Tokens</li>
+        <li>FUSION-CORE-00 Protocol Access</li>
+        <li>Exclusive Verified Security</li>
+        <li>Sovereign Ultra Authority</li>
+      </ul>
+      <a href="#cert" class="btn-plan">Activate Ultra-Elite →</a>
+    </div>
+  </div>
+</section>
+
+<!-- PIPELINE -->
+
+<section class="section pipeline-section" id="pipeline">
+  <div class="section-kicker">Comando 27 · Pipeline Core</div>
+  <h2>Sovereign <span class="t">Execution</span> Flow</h2>
+  <p class="section-desc">El flujo de ejecución completo desde identidad hasta orquestación cuántica en quantum-loop.fusion-throne.com</p>
+
+  <div class="pipeline-flow reveal">
+    <div class="pipe-step">
+      <div class="pipe-node" data-n="01">👤</div>
+      <div class="pipe-name">Identity</div>
+      <div class="pipe-status">✓ VERIFIED</div>
+    </div>
+    <div class="pipe-step">
+      <div class="pipe-node" data-n="02">🔐</div>
+      <div class="pipe-name">Authority</div>
+      <div class="pipe-status">✓ AUTHENTICATED</div>
+    </div>
+    <div class="pipe-step">
+      <div class="pipe-node" data-n="03">⚙️</div>
+      <div class="pipe-name">Execution</div>
+      <div class="pipe-status">✓ ACTIVE</div>
+    </div>
+    <div class="pipe-step">
+      <div class="pipe-node" data-n="04">📋</div>
+      <div class="pipe-name">Registry</div>
+      <div class="pipe-status">✓ SYNCED</div>
+    </div>
+    <div class="pipe-step">
+      <div class="pipe-node" data-n="05">🛡️</div>
+      <div class="pipe-name">Governance</div>
+      <div class="pipe-status">✓ COMPLIANT</div>
+    </div>
+  </div>
+</section>
+
+<!-- API -->
+
+<section class="section api-section" id="api">
+  <div class="section-kicker">REST API · Sovereign Backend v1.0</div>
+  <h2>API <span class="g">Endpoints</span></h2>
+  <p class="section-desc">Base URL: <code style="font-family:'Share Tech Mono',monospace;color:var(--teal);font-size:.85rem">https://quantum-loop.fusion-throne.com/api</code></p>
+
+  <div class="api-grid reveal">
+    <div class="api-card">
+      <div class="api-method get">GET</div>
+      <div class="api-path">/health</div>
+      <div class="api-desc">Check API operational status and engine version.</div>
+    </div>
+    <div class="api-card">
+      <div class="api-method post">POST</div>
+      <div class="api-path">/auth/master-login</div>
+      <div class="api-desc">Authenticate with Master API Key, receive JWT token.</div>
+    </div>
+    <div class="api-card">
+      <div class="api-method post">POST</div>
+      <div class="api-path">/license/verify</div>
+      <div class="api-desc">Verify HEISEN-MATRIX-05 license validity and entitlements.</div>
+    </div>
+    <div class="api-card">
+      <div class="api-method post">POST</div>
+      <div class="api-path">/license/issue</div>
+      <div class="api-desc">Issue new license record for enterprise tier.</div>
+    </div>
+    <div class="api-card">
+      <div class="api-method get">GET</div>
+      <div class="api-path">/license/status</div>
+      <div class="api-desc">Get current license status, expiration, usage metrics.</div>
+    </div>
+    <div class="api-card">
+      <div class="api-method get">GET</div>
+      <div class="api-path">/matrix/assets</div>
+      <div class="api-desc">Retrieve Fusion Tokens and matrix entitlements by owner.</div>
+    </div>
+    <div class="api-card">
+      <div class="api-method post">POST</div>
+      <div class="api-path">/matrix/assign</div>
+      <div class="api-desc">Assign matrix asset with tier and metadata config.</div>
+    </div>
+    <div class="api-card">
+      <div class="api-method post">POST</div>
+      <div class="api-path">/brain/intent</div>
+      <div class="api-desc">Send intent to AI Brain — Mentes Brillantes — for orchestration.</div>
+    </div>
+    <div class="api-card">
+      <div class="api-method post">POST</div>
+      <div class="api-path">/brain/generate</div>
+      <div class="api-desc">Generate code, pipeline, contract via AI Brain service.</div>
+    </div>
+    <div class="api-card">
+      <div class="api-method post">POST</div>
+      <div class="api-path">/quantum</div>
+      <div class="api-desc">Execute quantum-layer operations at fusion-throne.com</div>
+    </div>
+    <div class="api-card">
+      <div class="api-method get">GET</div>
+      <div class="api-path">/quantum/health</div>
+      <div class="api-desc">Quantum execution node status and availability.</div>
+    </div>
+    <div class="api-card">
+      <div class="api-method get">GET</div>
+      <div class="api-path">/audit/logs</div>
+      <div class="api-desc">Sovereign evidence vault logs for compliance tracking.</div>
+    </div>
+  </div>
+</section>
+
+<!-- TERMINAL -->
+
+<section class="section terminal-section">
+  <div class="section-kicker">Live Quick Start</div>
+  <h2>Connect en <span class="t">60 segundos</span></h2>
+
+  <div class="terminal reveal">
+    <div class="terminal-bar">
+      <div class="t-dot r"></div>
+      <div class="t-dot y"></div>
+      <div class="t-dot g"></div>
+      <div class="terminal-title">AHT-GATEWAY · SOVEREIGN TERMINAL · ENGINE 27</div>
+    </div>
+    <div class="terminal-body">
+<pre>
+<span class="t-comment"># ══════════════════════════════════════════════</span>
+<span class="t-comment"># SOVEREIGN BACKEND v1.0 · HEISEN-MATRIX-05</span>
+<span class="t-comment"># Owner: Roberto Rivera Gamas · RFC: RIGR840827PJ0</span>
+<span class="t-comment"># ══════════════════════════════════════════════</span>
+
+<span class="t-prompt">$</span> curl -s <span class="t-str">https://quantum-loop.fusion-throne.com/api/health</span>
+
+<span class="t-key">{</span>
+<span class="t-str">“status”</span>: <span class="t-val">“ok”</span>,
+<span class="t-str">“engine”</span>: <span class="t-val">“AHT_LGORITMO_SUPERCHARGE_27”</span>,
+<span class="t-str">“license”</span>: <span class="t-val">“HEISEN-MATRIX-05”</span>,
+<span class="t-str">“domain”</span>: <span class="t-val">“quantum-loop.fusion-throne.com”</span>,
+<span class="t-str">“sovereign”</span>: <span class="t-num">true</span>
+<span class="t-key">}</span>
+
+<span class="t-prompt">$</span> curl -X POST <span class="t-str">https://quantum-loop.fusion-throne.com/api/auth/master-login</span>   
+-H <span class="t-val">“x-api-key: YOUR_MASTER_API_KEY”</span>
+
+<span class="t-key">{</span>
+<span class="t-str">“token”</span>: <span class="t-val">“eyJhbGciOiJSUzI1NiJ9…”</span>,
+<span class="t-str">“owner”</span>: <span class="t-val">“Roberto Rivera Gamas”</span>,
+<span class="t-str">“license”</span>: <span class="t-val">“HEISEN-MATRIX-05”</span>,
+<span class="t-str">“tier”</span>: <span class="t-val">“Sovereign Enterprise”</span>,
+<span class="t-str">“expires”</span>: <span class="t-val">“2027-01-18T03:04:05Z”</span>
+<span class="t-key">}</span>
+
+<span class="t-prompt">$</span> <span class="t-cursor"></span>
+</pre>
+</div>
+
+  </div>
+</section>
+
+<!-- CERT -->
+
+<section class="cert-section" id="cert">
+  <div class="section-kicker">Certificado Oficial</div>
+  <h2>Sovereign <span class="g">Enterprise</span> License</h2>
+  <p class="section-desc" style="margin:0 auto 0;text-align:center">Emitido y sellado bajo la autoridad criptográfica de AHT-GATEWAY</p>
+
+  <div class="cert-box reveal">
+    <div class="cert-inner">
+      <div class="cert-title">◈ AHT-GATEWAY · SOVEREIGN ENTERPRISE LICENSE CERTIFICATE ◈</div>
+      <div style="font-size:2rem;margin-bottom:16px;filter:drop-shadow(0 0 12px rgba(212,175,55,.6))">♛</div>
+      <div class="cert-owner">Roberto Rivera Gamas</div>
+      <div class="cert-rfc">RFC: RIGR840827PJ0</div>
+      <div class="cert-badge">HEISEN-MATRIX-05 · ACTIVE · $75,000 USD</div>
+      <div style="font-family:'Share Tech Mono',monospace;font-size:.65rem;color:var(--dim);line-height:2;margin-top:16px">
+        <div>Brand: <span style="color:var(--gold)">Street Emporio Royal</span></div>
+        <div>Domain: <span style="color:var(--teal)">streetemporioroyal.com</span></div>
+        <div>Quantum: <span style="color:var(--teal)">quantum-loop.fusion-throne.com</span></div>
+        <div>Engine: <span style="color:var(--gold)">AHT LGORITMO SUPERCHARGE (27)</span></div>
+        <div>Authority: <span style="color:var(--text)">AHT SUPREM HYBRID → AHT-GATEWAY</span></div>
+        <div>Signed: <span style="color:var(--text)">RSA-4096 · SHA-256</span></div>
+      </div>
+      <div class="cert-hash">
+        BLOCKCHAIN HASH ID:<br/>
+        726561B11BB2D344648071C230401A0307D6E6FD5C8A9FCAC06474B8AD67C41E
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+
+<section class="cta-section">
+  <div class="cta-glow"></div>
+  <div class="section-kicker" style="justify-content:center">Ready to be Sovereign</div>
+  <h2 style="font-size:clamp(2.5rem,5vw,5rem);max-width:100%">Deploy tu <span class="t">Imperio</span><br/>Digital <span class="g">Hoy.</span></h2>
+  <p style="font-family:'Rajdhani',sans-serif;color:var(--dim);font-size:1.1rem;max-width:500px;margin:24px auto 48px;line-height:1.6;font-weight:300">
+    Un ecosistema completo de identidad soberana, licencias enterprise y ejecución cuántica. No es un producto — es una arquitectura de poder.
+  </p>
+  <div style="display:flex;gap:20px;justify-content:center;flex-wrap:wrap">
+    <a href="mailto:roberto@throne-protocol.com" class="btn-elite">Iniciar Onboarding</a>
+    <a href="#api" class="btn-ghost">View API Docs</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-brand">STREET EMPORIO ROYAL · AHT-GATEWAY</div>
+  <div class="footer-links">
+    <a href="#">Privacy</a>
+    <a href="#">Governance</a>
+    <a href="#">Contact</a>
+    <a href="mailto:services@aht-gateway.net">services@aht-gateway.net</a>
+  </div>
+  <div class="footer-hash">ENGINE: AHT_SUPERCHARGE_27 · SOVEREIGN BACKEND v1.0 · © 2026</div>
+</footer>
+
+<script>
+// ─── CUSTOM CURSOR
+const cur=document.getElementById('cur'),cur2=document.getElementById('cur2');
+document.addEventListener('mousemove',e=>{
+  cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';
+  cur2.style.left=e.clientX+'px';cur2.style.top=e.clientY+'px';
+});
+document.querySelectorAll('a,button').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.style.transform='translate(-50%,-50%) scale(3)';cur2.style.transform='translate(-50%,-50%) scale(.5)'});
+  el.addEventListener('mouseleave',()=>{cur.style.transform='translate(-50%,-50%) scale(1)';cur2.style.transform='translate(-50%,-50%) scale(1)'});
+});
+
+// ─── CANVAS COSMOS: INVERSE GRAVITY PARTICLES + CHESS + MOLECULES
+const canvas=document.getElementById('cosmos');
+const ctx=canvas.getContext('2d');
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+window.addEventListener('resize',()=>{canvas.width=window.innerWidth;canvas.height=window.innerHeight});
+
+// Particles
+const particles=[];
+const N=120;
+for(let i=0;i<N;i++){
+  particles.push({
+    x:Math.random()*canvas.width,
+    y:canvas.height+Math.random()*canvas.height,
+    r:Math.random()*1.5+.3,
+    speed:Math.random()*.4+.1,
+    drift:(Math.random()-.5)*.3,
+    alpha:Math.random()*.5+.1,
+    color:Math.random()>.6?'0,245,255':'212,175,55',
+    type:Math.floor(Math.random()*3)
+  });
+}
+
+// Chess pieces (floating)
+const chessPieces=['♔','♕','♗','♘','♙','♛','♟'];
+const chessFloaters=[];
+for(let i=0;i<12;i++){
+  chessFloaters.push({
+    x:Math.random()*canvas.width,
+    y:Math.random()*canvas.height,
+    char:chessPieces[Math.floor(Math.random()*chessPieces.length)],
+    size:Math.random()*20+12,
+    alpha:Math.random()*.06+.02,
+    vy:-(Math.random()*.15+.05),
+    vx:(Math.random()-.5)*.08
+  });
+}
+
+// Molecule nodes
+const moleculeNodes=[];
+const atomN=20;
+for(let i=0;i<atomN;i++){
+  moleculeNodes.push({
+    x:Math.random()*canvas.width,
+    y:Math.random()*canvas.height,
+    vx:(Math.random()-.5)*.3,
+    vy:(Math.random()-.5)*.3-.1,
+    r:Math.random()*2+1,
+    alpha:Math.random()*.15+.05
+  });
+}
+
+let frame=0;
+function animate(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  frame++;
+
+  // Draw molecule bonds
+  for(let i=0;i<moleculeNodes.length;i++){
+    for(let j=i+1;j<moleculeNodes.length;j++){
+      const n1=moleculeNodes[i],n2=moleculeNodes[j];
+      const d=Math.hypot(n1.x-n2.x,n1.y-n2.y);
+      if(d<180){
+        ctx.beginPath();
+        ctx.moveTo(n1.x,n1.y);ctx.lineTo(n2.x,n2.y);
+        ctx.strokeStyle=`rgba(0,245,255,${(1-d/180)*.06})`;
+        ctx.lineWidth=.5;ctx.stroke();
+      }
+    }
+  }
+
+  // Update & draw molecule atoms
+  moleculeNodes.forEach(n=>{
+    n.x+=n.vx;n.y+=n.vy;
+    if(n.x<0)n.x=canvas.width;
+    if(n.x>canvas.width)n.x=0;
+    if(n.y<-50)n.y=canvas.height+50;
+    if(n.y>canvas.height+50)n.y=-50;
+    ctx.beginPath();
+    ctx.arc(n.x,n.y,n.r,0,Math.PI*2);
+    ctx.fillStyle=`rgba(0,245,255,${n.alpha})`;
+    ctx.fill();
+  });
+
+  // Chess floaters
+  chessFloaters.forEach(c=>{
+    c.x+=c.vx;c.y+=c.vy;
+    if(c.y<-40)c.y=canvas.height+40;
+    ctx.font=`${c.size}px serif`;
+    ctx.fillStyle=`rgba(212,175,55,${c.alpha})`;
+    ctx.fillText(c.char,c.x,c.y);
+  });
+
+  // Inverse gravity particles
+  particles.forEach(p=>{
+    p.y-=p.speed;
+    p.x+=p.drift+Math.sin(frame*.01+p.x*.01)*.2;
+    if(p.y<-10){p.y=canvas.height+10;p.x=Math.random()*canvas.width}
+    if(p.type===0){
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(${p.color},${p.alpha})`;ctx.fill();
+    } else if(p.type===1){
+      ctx.beginPath();
+      ctx.moveTo(p.x,p.y-p.r*2);
+      ctx.lineTo(p.x+p.r*1.5,p.y+p.r);
+      ctx.lineTo(p.x-p.r*1.5,p.y+p.r);
+      ctx.closePath();
+      ctx.fillStyle=`rgba(${p.color},${p.alpha*.7})`;ctx.fill();
+    } else {
+      ctx.fillStyle=`rgba(${p.color},${p.alpha*.5})`;
+      ctx.fillRect(p.x-p.r,p.y-p.r,p.r*2,p.r*2);
+    }
+  });
+
+  // Scan line overlay
+  const scanY=(frame*.8)%canvas.height;
+  const grad=ctx.createLinearGradient(0,scanY-40,0,scanY+2);
+  grad.addColorStop(0,'rgba(0,245,255,0)');
+  grad.addColorStop(1,'rgba(0,245,255,0.015)');
+  ctx.fillStyle=grad;
+  ctx.fillRect(0,scanY-40,canvas.width,42);
+
+  requestAnimationFrame(animate);
+}
+animate();
+
+// ─── SCROLL REVEAL
+const revealEls=document.querySelectorAll('.reveal');
+const obs=new IntersectionObserver(es=>{
+  es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('v')});
+},{threshold:.12});
+revealEls.forEach(r=>obs.observe(r));
+</script>
+
+</body>
+</html>

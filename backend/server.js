@@ -1,32 +1,49 @@
-const express = require('express');
-const path = require('path');
+// backend/server.js
+const express = require("express");
 const app = express();
-const PORT = process.env.PORT || 3000;
-
-// Middleware to parse JSON requests
 app.use(express.json());
 
-// Serve static files from 'public' directory
-app.use(express.static(path.join(__dirname, 'public')));
-
-// API endpoint examples
-app.get('/api/data', (req, res) => {
-    res.json({ message: 'Hello from the API' });
+// === 1) Estado vivo (mock realista) =======================
+app.get("/dominionLiveState", (req, res) => {
+  res.json({ status: "ACTIVE_MOBILE", message: "Dominio soberano activo" });
 });
 
-// Add 39 more endpoint examples as necessary...
-
-// 40 QFN Nodes Manifest placeholder
-const qfnNodesManifest = [
-    // Fill with actual QFN nodes data as per requirement...
-];
-
-// API endpoint to retrieve QFN node manifest
-app.get('/api/qfn-nodes', (req, res) => {
-    res.json(qfnNodesManifest);
+// === 2) Ensamblador de Directiva ==========================
+app.post("/buildDirectiva", (req, res) => {
+  const state = req.body;
+  res.json({ directiva: "Resumen ejecutivo", state });
 });
 
-// Start the server
+// === 3) Notificador opcional a Discord ====================
+app.post("/notifyDiscord", (req, res) => {
+  const { texto } = req.body;
+  console.log("Notificando a Discord:", texto);
+  res.json({ status: "sent", texto });
+});
+
+// === 4) Endpoint principal: Directiva =====================
+app.get("/directiva", (req, res) => {
+  res.send("// DIRECTIVA SOBERANA // Dominio protegido y optimizado.");
+});
+
+// === 5) Tarea manual: disparar y enviar a Discord =========
+app.post("/royal_push_directiva", (req, res) => {
+  res.json({ status: "pushed", target: "Discord" });
+});
+
+// Ejemplo de otras funciones del listado
+app.post("/sendJSON", (req, res) => {
+  res.json(req.body);
+});
+
+app.post("/logEvent", (req, res) => {
+  console.log("Evento:", req.body);
+  res.json({ status: "logged" });
+});
+
+// Puerto
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+  console.log(`Servidor soberano corriendo en puerto ${PORT}`);
 });
+
