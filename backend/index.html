@@ -246,7 +246,7 @@ position:relative;z-index:10;
 padding:120px 60px;
 }
 .section-kicker{
-font-family:‘Share Tech Mono’,monospace;
+font-family:���Share Tech Mono’,monospace;
 font-size:.65rem;letter-spacing:.3em;
 color:var(–teal);text-transform:uppercase;
 margin-bottom:12px;
@@ -1250,6 +1250,11 @@ const obs=new IntersectionObserver(es=>{
   es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('v')});
 },{threshold:.12});
 revealEls.forEach(r=>obs.observe(r));
+</script>
+
+<script type="module">
+import { inject } from 'https://cdn.jsdelivr.net/npm/@vercel/analytics@1/+esm';
+inject();
 </script>
 
 </body>
