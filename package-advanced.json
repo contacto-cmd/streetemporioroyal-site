@@ -1,0 +1,57 @@
+{
+  "name": "ser27-bot-advanced",
+  "version": "2.0.0",
+  "type": "module",
+  "description": "SER27-BOT-24/7 ADVANCED - Autonomous Intelligence System with Claude AI, DevSecOps, HPCA, and Airtable",
+  "main": "ser27-bot-advanced.js",
+  "scripts": {
+    "start": "node ser27-bot-advanced.js",
+    "dev": "nodemon ser27-bot-advanced.js",
+    "test": "echo \"SER27-BOT ready for deployment\"",
+    "health-check": "curl http://localhost:3000/status"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "@octokit/rest": "^20.0.0",
+    "twilio": "^4.19.0",
+    "@anthropic-ai/sdk": "^0.24.3",
+    "node-fetch": "^3.3.2",
+    "dotenv": "^16.3.1",
+    "cors": "^2.8.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "keywords": [
+    "autonomous",
+    "ai",
+    "bot",
+    "devsecops",
+    "hpca",
+    "airtable",
+    "deployment",
+    "claude",
+    "anthropic",
+    "github",
+    "railway",
+    "vercel",
+    "render",
+    "cloudflare",
+    "ser27",
+    "lgoritmo"
+  ],
+  "author": "contacto-cmd",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/contacto-cmd/streetemporioroyal-site.git"
+  },
+  "bugs": {
+    "url": "https://github.com/contacto-cmd/streetemporioroyal-site/issues"
+  },
+  "homepage": "https://github.com/contacto-cmd/streetemporioroyal-site#readme"
+}
