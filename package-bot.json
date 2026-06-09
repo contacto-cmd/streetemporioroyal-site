@@ -1,0 +1,46 @@
+{
+  "name": "ser27-bot-24-7",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Autonomous Robotic Agent - 24/7 Deep Thinking & Deployment Orchestrator",
+  "main": "ser27-bot-server.js",
+  "scripts": {
+    "start": "node ser27-bot-server.js",
+    "dev": "nodemon ser27-bot-server.js",
+    "test": "echo \"Tests running...\"",
+    "deploy:railway": "railway deploy",
+    "deploy:vercel": "vercel --prod",
+    "deploy:render": "render deploy"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "@octokit/rest": "^20.0.0",
+    "twilio": "^4.19.0",
+    "node-fetch": "^3.3.2",
+    "dotenv": "^16.3.1",
+    "crypto": "^1.0.1",
+    "cors": "^2.8.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "autonomous",
+    "bot",
+    "deployment",
+    "deep-thinking",
+    "github",
+    "railway",
+    "vercel",
+    "render",
+    "twilio",
+    "whatsapp",
+    "ser27",
+    "lgoritmo"
+  ],
+  "author": "contacto-cmd",
+  "license": "MIT"
+}
