@@ -1,0 +1,61 @@
+{
+  "version": 2,
+  "name": "streetemporioroyal-site",
+  "public": false,
+  "builds": [
+    {
+      "src": "backend/web/**",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "backend/server.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "backend/server.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "backend/web/$1"
+    }
+  ],
+  "env": {
+    "DATABASE_URL": "@database_url",
+    "REDIS_URL": "@redis_url",
+    "AWS_ACCESS_KEY_ID": "@aws_access_key",
+    "AWS_SECRET_ACCESS_KEY": "@aws_secret_key",
+    "AWS_REGION": "us-east-1",
+    "AWS_S3_BUCKET": "@aws_s3_bucket",
+    "NODE_ENV": "production",
+    "ML_MODEL_PATH": "/models/brain-ai-v2.0"
+  },
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600, s-maxage=3600"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        }
+      ]
+    }
+  ],
+  "regions": ["iad1"],
+  "functions": {
+    "backend/server.js": {
+      "memory": 1024,
+      "maxDuration": 60
+    }
+  }
+}
