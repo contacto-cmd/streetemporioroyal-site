@@ -1,7 +1,7 @@
 {
   "name": "street-emporio-royal-site",
-  "version": "1.0.0",
-  "description": "STREET EMPORIO ROYAL · AHT-GATEWAY · SOVEREIGN ENTERPRISE",
+  "version": "1.0.1",
+  "description": "STREET EMPORIO ROYAL \u00b7 AHT-GATEWAY \u00b7 SOVEREIGN ENTERPRISE",
   "main": "backend/web/index.html",
   "scripts": {
     "dev": "http-server backend/web -p 8000 -c-1",
@@ -19,10 +19,11 @@
   "author": "contacto-cmd",
   "license": "MIT",
   "dependencies": {
-    "octokit": "^3.1.2"
+    "http-server": "14.1.1"
   },
-  "devDependencies": {
-    "http-server": "^14.1.1"
+  "devDependencies": {},
+  "engines": {
+    "node": ">=18"
   },
   "repository": {
     "type": "git",
