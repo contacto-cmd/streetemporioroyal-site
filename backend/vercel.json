@@ -1,0 +1,9 @@
+{
+  "version": 2,
+  "functions": {
+    "server.js": {
+      "memory": 1024,
+      "maxDuration": 60
+    }
+  }
+}
