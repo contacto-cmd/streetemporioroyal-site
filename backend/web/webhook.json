@@ -1,0 +1,8 @@
+{
+  "status": "ok",
+  "service": "bot.streetemporioroyal.com",
+  "surface": "public",
+  "path": "/webhook",
+  "mode": "static_recovery",
+  "message": "Public webhook path is reachable again for smoke checks. Production event handling should still use the canonical POST integration endpoint."
+}
