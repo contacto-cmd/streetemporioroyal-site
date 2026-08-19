@@ -1,12 +1,7 @@
 {
   "version": 2,
   "name": "streetemporioroyal-site",
-  "public": false,
   "builds": [
-    {
-      "src": "backend/web/**",
-      "use": "@vercel/static"
-    },
     {
       "src": "backend/server.js",
       "use": "@vercel/node"
@@ -14,36 +9,10 @@
   ],
   "routes": [
     {
-      "src": "^/$",
-      "dest": "backend/index.html"
-    },
-    {
-      "src": "^/health/?$",
-      "dest": "backend/web/health.json"
-    },
-    {
-      "src": "^/webhook/?$",
-      "dest": "backend/web/webhook.json"
-    },
-    {
-      "src": "/api/(.*)",
-      "dest": "backend/server.js"
-    },
-    {
       "src": "/(.*)",
-      "dest": "backend/web/$1"
+      "dest": "backend/server.js"
     }
   ],
-  "env": {
-    "DATABASE_URL": "@database_url",
-    "REDIS_URL": "@redis_url",
-    "AWS_ACCESS_KEY_ID": "@aws_access_key",
-    "AWS_SECRET_ACCESS_KEY": "@aws_secret_key",
-    "AWS_REGION": "us-east-1",
-    "AWS_S3_BUCKET": "@aws_s3_bucket",
-    "NODE_ENV": "production",
-    "ML_MODEL_PATH": "/models/brain-ai-v2.0"
-  },
   "headers": [
     {
       "source": "/(.*)",
@@ -63,11 +32,5 @@
       ]
     }
   ],
-  "regions": ["iad1"],
-  "functions": {
-    "backend/server.js": {
-      "memory": 1024,
-      "maxDuration": 60
-    }
-  }
+  "regions": ["iad1"]
 }
