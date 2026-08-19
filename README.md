@@ -2,6 +2,8 @@
 
 **Sovereign Enterprise Cloud Platform** | AI-Powered E-Commerce Ecosystem | Production-Ready
 
+> Deployment note: the repository root now contains the active Vercel deployment workflow and routing recovery for the public site surface.
+
 ---
 
 ## 🚀 Live Platform
