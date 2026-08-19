@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Streetemporioroyal · Recovery Surface</title>
+  <style>
+    :root {
+      --bg: #050810;
+      --card: #0b1320;
+      --teal: #00f5ff;
+      --gold: #d4af37;
+      --text: #d6e3f0;
+      --muted: #86a0b8;
+      --ok: #00ff88;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      background: radial-gradient(circle at top, #0d1c2f 0%, var(--bg) 55%);
+      color: var(--text);
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      padding: 24px;
+    }
+    .card {
+      width: min(760px, 100%);
+      background: rgba(11, 19, 32, 0.92);
+      border: 1px solid rgba(0, 245, 255, 0.2);
+      border-radius: 20px;
+      padding: 40px 32px;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+    }
+    .eyebrow {
+      color: var(--teal);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 12px;
+      margin-bottom: 14px;
+    }
+    h1 {
+      margin: 0 0 12px;
+      font-size: clamp(36px, 7vw, 58px);
+      line-height: 0.95;
+    }
+    h1 .gold { color: var(--gold); }
+    p {
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 16px;
+      margin: 0 0 18px;
+    }
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin: 10px 0 22px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(0, 255, 136, 0.08);
+      border: 1px solid rgba(0, 255, 136, 0.2);
+      color: var(--ok);
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--ok);
+      box-shadow: 0 0 18px rgba(0, 255, 136, 0.55);
+    }
+    .grid {
+      display: grid;
+      gap: 14px;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      margin-top: 26px;
+    }
+    .tile {
+      border-radius: 16px;
+      padding: 16px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .tile strong {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+    .tile span {
+      color: var(--muted);
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <div class="eyebrow">Streetemporioroyal · Sovereign Recovery</div>
+    <h1><span class="gold">Street</span> Emporio Royal</h1>
+    <div class="status"><span class="dot"></span> Root surface reachable</div>
+    <p>Esta superficie de recuperación existe para garantizar respuesta <strong>200</strong> en el root público mientras termina de estabilizarse el despliegue completo.</p>
+    <p>El objetivo de esta página es confirmar que la ruta principal ya no está rota y que el dominio puede servir contenido otra vez.</p>
+    <div class="grid">
+      <div class="tile">
+        <strong>Estado</strong>
+        <span>Recovery surface online</span>
+      </div>
+      <div class="tile">
+        <strong>Marca</strong>
+        <span>Streetemporioroyal</span>
+      </div>
+      <div class="tile">
+        <strong>Siguiente paso</strong>
+        <span>Validar deploy final y health checks</span>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
