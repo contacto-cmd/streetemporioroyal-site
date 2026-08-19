@@ -14,6 +14,18 @@
   ],
   "routes": [
     {
+      "src": "^/$",
+      "dest": "backend/index.html"
+    },
+    {
+      "src": "^/health/?$",
+      "dest": "backend/web/health.json"
+    },
+    {
+      "src": "^/webhook/?$",
+      "dest": "backend/web/webhook.json"
+    },
+    {
       "src": "/api/(.*)",
       "dest": "backend/server.js"
     },
